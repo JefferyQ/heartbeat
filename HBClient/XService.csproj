@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>XService</RootNamespace>
     <AssemblyName>XService</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -52,6 +53,9 @@
     <Reference Include="ExF.Infrastructure, Version=1.1.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ExF.Infrastructure.1.1.0.6\lib\ExF.Infrastructure.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="ExF.Windsor.BaseContainer">
+      <HintPath>..\lib\ExF.Windsor.BaseContainer.dll</HintPath>
     </Reference>
     <Reference Include="HibernatingRhinos.Profiler.Appender.v4.0, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0774796e73ebf640, processorArchitecture=MSIL">
       <HintPath>..\packages\ExF.Application.Base.1.1.0.3\lib\net40\HibernatingRhinos.Profiler.Appender.v4.0.dll</HintPath>
