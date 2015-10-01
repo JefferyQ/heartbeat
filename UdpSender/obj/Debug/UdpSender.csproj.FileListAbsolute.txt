@@ -1,6 +1,0 @@
-D:\SVN\POC\Monitoring\Heartbeat\UdpSender\bin\Debug\UdpSender.exe.config
-D:\SVN\POC\Monitoring\Heartbeat\UdpSender\bin\Debug\UdpSender.exe
-D:\SVN\POC\Monitoring\Heartbeat\UdpSender\bin\Debug\UdpSender.pdb
-D:\SVN\POC\Monitoring\Heartbeat\UdpSender\obj\Debug\UdpSender.csprojResolveAssemblyReference.cache
-D:\SVN\POC\Monitoring\Heartbeat\UdpSender\obj\Debug\UdpSender.exe
-D:\SVN\POC\Monitoring\Heartbeat\UdpSender\obj\Debug\UdpSender.pdb
