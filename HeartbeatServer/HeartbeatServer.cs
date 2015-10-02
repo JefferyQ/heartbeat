@@ -38,7 +38,7 @@ namespace HeartbeatServer
 
         public void SaveDisk()
         {
-            //BinarySerialization.WriteToBinaryFile("Dump.hb", _appStatsProcessor.GetAllAppStats());
+            //BinarySerialization.WriteToBinaryFile("C:/Users/cozkoc/Desktop/heartbeat_service/heartbeat/Dump.hb", GetAllAppStats());
         }
     }
 }

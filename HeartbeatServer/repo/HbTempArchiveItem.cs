@@ -49,5 +49,10 @@ namespace HeartbeatServer
         ///     Average Duration
         /// </summary>
         public int AverageDuration { get; set; }
+
+        /// <summary>
+        ///     ExceptionCount 
+        /// </summary>
+        public int ExceptionCount { get; set; } // exception count yoktu, eklendi
     }
 }

@@ -15,6 +15,12 @@ namespace HeartbeatServer
         public int Hour { get; set; }
 
         /// <summary>
+        /// Date for deleting old archive items
+        /// </summary>
+        public DateTime ArchieveDate { get; set; }
+
+
+        /// <summary>
         ///     Client IP Address
         /// </summary>
         public string ClientIp { get; set; }
@@ -53,5 +59,10 @@ namespace HeartbeatServer
         ///     Average Duration
         /// </summary>
         public int AverageDuration { get; set; }
+
+        /// <summary>
+        ///     Exception Count
+        /// </summary>
+        public int ExceptionCount { get; set; } // exception count yoktu, eklendi
     }
 }

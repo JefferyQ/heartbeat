@@ -6,14 +6,17 @@ using System.Linq;
 using System.Threading;
 using Heartbeat;
 using Timer = System.Timers.Timer;
+using System.Diagnostics;
 
 namespace HeartbeatServer
 {
+
     /// <summary>
     /// Keeps heartbeats for the last hour.
     /// </summary>
     public class HbArchiveProcessor
     {
+
         private readonly List<HbTempArchiveItem> _hbTempArchiveItems;
         private readonly List<HbArchiveItem> _hbArchiveItems;
 
@@ -24,15 +27,19 @@ namespace HeartbeatServer
             DoTimerStuff();
 
 
-            /*
-            //TODO : Load from DB
-            List<AppStats> appStats = BinarySerialization.ReadFromBinaryFile<List<AppStats>>("Dump.hb");
 
-            foreach (var appStat in appStats)
-            {
-                AddAppStats(appStat);
-            }
-            */
+            //TODO : Load from DB
+            //List<AppStats> appStats = BinarySerialization.ReadFromBinaryFile<List<AppStats>>("Dump.hb");
+
+            //if (appStats != null)
+            //{
+            //    foreach (var appStat in appStats)
+            //    {
+            //        AddAppStats(appStat);
+            //    }
+
+            //}
+
 
             //HbTempArchiveItems = BinarySerialization.ReadFromBinaryFile<List<HbTempArchiveItem>>("Repo\\HbTempArchiveItems.hb");
             //
@@ -64,7 +71,8 @@ namespace HeartbeatServer
                             ExecutionCount = newMethodStats.ExecutionCount,
                             AverageDuration = newMethodStats.AverageDuration,
                             MaxDuration = newMethodStats.MaxDuration,
-                            MinDuration = newMethodStats.MinDuration
+                            MinDuration = newMethodStats.MinDuration,
+                            ExceptionCount = newMethodStats.ExceptionCount // exception count yoktu, eklendi
                         });
                     }
                     else
@@ -99,9 +107,10 @@ namespace HeartbeatServer
         {
             Console.WriteLine("Archive started.");
 
-            //TODO: Import items older then 1 hour to HbArchiveItem and delete from HbTempArchiveItems
+            //TODO: Export items older then 1 hour to HbArchiveItem and delete from HbTempArchiveItems
 
-            DateTime threshold = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, 0);
+            //DateTime threshold = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, 0);
+            DateTime threshold = DateTime.Now;
             int hour = DateTime.Now.Hour;
             int day = int.Parse(DateTime.Now.ToString("yyyyMMdd"));
 
@@ -113,8 +122,13 @@ namespace HeartbeatServer
                 Monitor.Enter(_hbArchiveItems, ref acquiredLockArchive);
 
                 //TODO : Test edin.
-                DateTime archiveThreshold = DateTime.Now.AddDays(-32);
-                _hbArchiveItems.RemoveAll(m => DateTime.ParseExact(m.Day.ToString(), "yyyyMMdd", CultureInfo.InvariantCulture) < threshold);
+
+                // do stuff
+
+               
+                //DateTime archiveThreshold = DateTime.Now;
+                //_hbArchiveItems.RemoveAll(m => DateTime.ParseExact(m.Day.ToString(), "yyyyMMdd", CultureInfo.InvariantCulture) < archiveThreshold); // threshold archiveThreshold olarak değiştirildi
+
 
                 foreach (HbTempArchiveItem newItem in _hbTempArchiveItems.Where(m => m.StatDate < threshold))
                 {
@@ -136,7 +150,10 @@ namespace HeartbeatServer
                             MaxDuration = newItem.MaxDuration,
                             ClientIp = newItem.ClientIp,
                             AverageDuration = newItem.AverageDuration,
-                            ApplicationName = newItem.ApplicationName
+                            ApplicationName = newItem.ApplicationName,
+                            ExceptionCount = newItem.ExceptionCount, // exception count yoktu, eklendi
+                            ArchieveDate = newItem.StatDate
+
                         });
                     }
                     else
@@ -151,13 +168,23 @@ namespace HeartbeatServer
                     }
                 }
 
-                _hbTempArchiveItems.RemoveAll(m => m.StatDate < threshold);
+
 
                 Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " : TempArchive Expired. ItemCount : " + _hbTempArchiveItems.Count);
                 Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " : TempArchive Expired. ExecutionCount : " + _hbTempArchiveItems.Sum(m => m.ExecutionCount));
 
                 Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " : Archive updated. ItemCount : " + _hbArchiveItems.Count);
                 Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " : Archive updated. ExecutionCount : " + _hbArchiveItems.Sum(m => m.ExecutionCount));
+
+                _hbArchiveItems.RemoveAll(m => (threshold - m.ArchieveDate).TotalMinutes > 10);
+                _hbTempArchiveItems.RemoveAll(m => m.StatDate < threshold);
+
+                //if (_hbArchiveItems.Count != 0)
+                //{
+                //    BinarySerialization.WriteToBinaryFile<List<HbArchiveItem>>("Dump.hb", _hbArchiveItems);
+                //}
+
+
             }
             catch (Exception ex)
             {
