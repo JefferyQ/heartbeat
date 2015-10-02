@@ -112,6 +112,7 @@ namespace HeartbeatServer
             //DateTime threshold = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, 0);
             DateTime threshold = DateTime.Now;
             int hour = DateTime.Now.Hour;
+            //int minute = DateTime.Now.Minute; // test için
             int day = int.Parse(DateTime.Now.ToString("yyyyMMdd"));
 
             bool acquiredLockTemp = false;
@@ -176,7 +177,10 @@ namespace HeartbeatServer
                 Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " : Archive updated. ItemCount : " + _hbArchiveItems.Count);
                 Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " : Archive updated. ExecutionCount : " + _hbArchiveItems.Sum(m => m.ExecutionCount));
 
-                _hbArchiveItems.RemoveAll(m => (threshold - m.ArchieveDate).TotalMinutes > 10);
+                //_hbArchiveItems.RemoveAll(m => (threshold - m.ArchieveDate).TotalMinutes > 3);   for testing
+
+                _hbArchiveItems.RemoveAll(m => (threshold - m.ArchieveDate).TotalMinutes > 32 * 24 * 60);
+
                 _hbTempArchiveItems.RemoveAll(m => m.StatDate < threshold);
 
                 //if (_hbArchiveItems.Count != 0)

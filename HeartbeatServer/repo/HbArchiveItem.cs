@@ -19,6 +19,11 @@ namespace HeartbeatServer
         /// </summary>
         public DateTime ArchieveDate { get; set; }
 
+        /// <summary>
+        /// yyyyMMdd format int
+        /// </summary>
+        //public int Minute { get; set; } test için
+
 
         /// <summary>
         ///     Client IP Address
