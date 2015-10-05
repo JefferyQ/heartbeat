@@ -86,6 +86,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HeartbeatServer.cs" />
+    <Compile Include="repo\ServiceInfo.cs" />
     <Compile Include="repo\HbArchiveItem.cs" />
     <Compile Include="repo\HbArchiveProcessor.cs" />
     <Compile Include="repo\HbTempArchiveItem.cs" />

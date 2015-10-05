@@ -30,6 +30,7 @@ namespace HeartbeatServer
         private void DataReceived(IAsyncResult ar)
         {
             UdpClient c = (UdpClient)ar.AsyncState;
+
             IPEndPoint receivedIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
             byte[] receivedBytes = c.EndReceive(ar, ref receivedIpEndPoint);
 
@@ -38,7 +39,8 @@ namespace HeartbeatServer
             AppStats appStats = JsonConvert.DeserializeObject<AppStats>(receivedText);
             _appStatsProcessor.AddNewAppStats(appStats);
 
-            Console.WriteLine("Data Received From : " + appStats.ClientMachine + " / " + appStats.ClientIp + " / " + appStats.ApplicationName);
+            Console.WriteLine("Data Received From : " + appStats.ClientMachine + " / " + appStats.ClientIp + " / " +
+                              appStats.ApplicationName);
             // Restart listening for udp data packages
             c.BeginReceive(DataReceived, ar.AsyncState);
         }

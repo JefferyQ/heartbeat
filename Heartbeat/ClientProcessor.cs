@@ -15,6 +15,7 @@ namespace Heartbeat
     {
         private readonly InfoReserve _infoReserve;
         private Timer _flushTimer;
+        private string LocalIp;
 
         public ClientProcessor()
         {
@@ -33,6 +34,8 @@ namespace Heartbeat
                 Console.WriteLine("HeartBeatFlushIntervalSeconds parameter is invalid in Configuration. The value is set to 60 sec.");
                 heartbeatIntervalSeconds = 60;
             }
+
+            LocalIp = GetLocalIpAddress();
 
             _flushTimer = new Timer
             {
@@ -95,7 +98,7 @@ namespace Heartbeat
                 MethodStats = new List<MethodExecutionStats>(),
                 EndDate = DateTime.Now,
                 StartDate = _infoReserve.Created,
-                ClientIp = GetLocalIpAddress(),
+                ClientIp = LocalIp,
                 ClientMachine = Environment.MachineName,
                 ApplicationName = ConfigurationManager.AppSettings["HeartbeatApplicationName"]
             };

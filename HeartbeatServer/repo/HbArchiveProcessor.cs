@@ -20,19 +20,23 @@ namespace HeartbeatServer
 
         private readonly List<HbTempArchiveItem> _hbTempArchiveItems;
         private readonly List<HbArchiveItem> _hbArchiveItems;
+        private readonly List<ServiceInfo> _allServicesInfo;
 
         public HbArchiveProcessor()
         {
             _hbTempArchiveItems = new List<HbTempArchiveItem>();
             _hbArchiveItems = new List<HbArchiveItem>();
-            DoTimerStuff();
+            _allServicesInfo = new List<ServiceInfo>();
 
+            DoTimerStuff();
+            
             List<HbArchiveItem> archiveItems = BinarySerialization.ReadFromBinaryFile<List<HbArchiveItem>>("Archive.hb");
+            List<ServiceInfo> allServicesInfo = BinarySerialization.ReadFromBinaryFile<List<ServiceInfo>>("ServicesInformation.hb");
             
             if (archiveItems != null)
-            {
-                _hbArchiveItems = archiveItems;  
-            }
+                _hbArchiveItems = archiveItems;
+            if (allServicesInfo != null)
+                _allServicesInfo = allServicesInfo;
         }
 
         /// <summary>
@@ -42,12 +46,16 @@ namespace HeartbeatServer
         public void AddAppStats(AppStats newAppStats)
         {
             bool acquiredLock = false;
+            bool acquiredlockServices = false;
             try
             {
                 Monitor.Enter(_hbTempArchiveItems, ref acquiredLock);
+                Monitor.Enter(_allServicesInfo, ref acquiredlockServices);
 
                 foreach (MethodExecutionStats newMethodStats in newAppStats.MethodStats)
                 {
+
+                    // Add or Update hbTempArchiveItems
                     var existingItem = _hbTempArchiveItems.SingleOrDefault(m => m.ApplicationName == newAppStats.ApplicationName && m.MethodName == newMethodStats.MethodName);
                     if (existingItem == null)
                     {
@@ -75,6 +83,22 @@ namespace HeartbeatServer
                             existingItem.AverageDuration = ((existingItem.AverageDuration * existingItem.ExecutionCount) + (newMethodStats.AverageDuration * newMethodStats.ExecutionCount)) / (existingItem.ExecutionCount + newMethodStats.ExecutionCount);
                         existingItem.ExecutionCount = existingItem.ExecutionCount + newMethodStats.ExecutionCount;
                     }
+
+                    // Add or Update ServiceInfos
+                    var existingServices = _allServicesInfo.SingleOrDefault(m => m.ApplicationName == newAppStats.ApplicationName && m.ServerName == newAppStats.ClientMachine);
+                    if (existingServices == null)
+                    {
+                        _allServicesInfo.Add(new ServiceInfo()
+                        {
+                            ApplicationName = newAppStats.ApplicationName,
+                            LastHeartBeatDate = newAppStats.EndDate,
+                            ServerName = newAppStats.ClientMachine
+                        });
+                    }
+                    else
+                    {
+                        existingServices.LastHeartBeatDate = newAppStats.EndDate;
+                    }
                 }
                 Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " : New AppStats added. ItemCount : " + _hbTempArchiveItems.Count);
                 Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " : New AppStats added. ExecutionCount : " + _hbTempArchiveItems.Sum(m => m.ExecutionCount));
@@ -87,6 +111,8 @@ namespace HeartbeatServer
             {
                 if (acquiredLock)
                     Monitor.Exit(_hbTempArchiveItems);
+                if (acquiredlockServices)
+                    Monitor.Exit(_allServicesInfo);
             }
         }
 
@@ -95,8 +121,6 @@ namespace HeartbeatServer
         {
             Console.WriteLine("Archive started.");
 
-            //TODO: Export items older then 1 hour to HbArchiveItem and delete from HbTempArchiveItems
-
             DateTime threshold = DateTime.Now;
             int hour = DateTime.Now.Hour;
             //int minute = DateTime.Now.Minute; // test için
@@ -104,10 +128,12 @@ namespace HeartbeatServer
 
             bool acquiredLockTemp = false;
             bool acquiredLockArchive = false;
+            bool acquiredlockServices = false;
             try
             {
                 Monitor.Enter(_hbTempArchiveItems, ref acquiredLockTemp);
                 Monitor.Enter(_hbArchiveItems, ref acquiredLockArchive);
+                Monitor.Enter(_allServicesInfo, ref acquiredlockServices);
 
                 //_hbArchiveItems.RemoveAll(m => (threshold - m.ArchieveDate).TotalMinutes > 3);   for testing
                 _hbArchiveItems.RemoveAll(m => (threshold - m.ArchieveDate).TotalMinutes > 32 * 24 * 60);
@@ -149,7 +175,7 @@ namespace HeartbeatServer
                         existingItem.ExecutionCount = existingItem.ExecutionCount + newItem.ExecutionCount;
                     }
                 }
-                
+
                 Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " : TempArchive Expired. ItemCount : " + _hbTempArchiveItems.Count);
                 Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " : TempArchive Expired. ExecutionCount : " + _hbTempArchiveItems.Sum(m => m.ExecutionCount));
 
@@ -157,8 +183,9 @@ namespace HeartbeatServer
                 Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " : Archive updated. ExecutionCount : " + _hbArchiveItems.Sum(m => m.ExecutionCount));
 
                 _hbTempArchiveItems.RemoveAll(m => m.StatDate < threshold);
-              
+
                 BinarySerialization.WriteToBinaryFile<List<HbArchiveItem>>("Archive.hb", _hbArchiveItems);
+                BinarySerialization.WriteToBinaryFile<List<ServiceInfo>>("ServicesInformation.hb", _allServicesInfo);
             }
             catch (Exception ex)
             {
@@ -170,6 +197,8 @@ namespace HeartbeatServer
                     Monitor.Exit(_hbTempArchiveItems);
                 if (acquiredLockArchive)
                     Monitor.Exit(_hbArchiveItems);
+                if (acquiredlockServices)
+                    Monitor.Exit(_allServicesInfo);
             }
         }
 
