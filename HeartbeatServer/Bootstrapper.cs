@@ -23,7 +23,6 @@ namespace HeartbeatServer
             _xServicebootstrapperHelper.GetWindsorContainer()
                 .Register(Component.For<HbArchiveProcessor>().LifeStyle.Singleton)
                 .Register(Component.For<AppStatsProcessor>().LifeStyle.Singleton)
-                .Register(Component.For<DummyAppStatsSender>().LifeStyle.Singleton)
                 .Register(Component.For<UdpServer>().LifeStyle.Singleton);
 
             //bunu silerseniz init olmaz, paketleri dinlemez.

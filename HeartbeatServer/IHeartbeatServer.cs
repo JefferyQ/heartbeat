@@ -8,9 +8,6 @@ namespace HeartbeatServer
     public interface IHeartbeatServer
     {
         [OperationContract]
-        string Test(string test);
-
-        [OperationContract]
         SummaryResponse GetSummary();
 
         [OperationContract]

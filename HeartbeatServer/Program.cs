@@ -1,5 +1,6 @@
 ﻿using System;
 using ExF.Application.Base;
+using System.Configuration;
 
 namespace HeartbeatServer
 {

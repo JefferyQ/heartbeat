@@ -24,15 +24,19 @@ namespace Heartbeat
                 ExecStats = new List<MethodExecutionInfo>()
             };
 
-            //TODO : UnComment
-            //var heartbeatFlushIntervalSeconds = ConfigurationManager.AppSettings["HeartbeatFlushIntervalSeconds"];
-            var heartbeatFlushIntervalSeconds = "60";
-            if (string.IsNullOrEmpty(heartbeatFlushIntervalSeconds))
-                heartbeatFlushIntervalSeconds = "60";
+            var heartbeatFlushIntervalSeconds = ConfigurationManager.AppSettings["HeartbeatFlushIntervalSeconds"];
+            
+            int heartbeatIntervalSeconds;
+            if (string.IsNullOrEmpty(heartbeatFlushIntervalSeconds) ||
+                !int.TryParse(heartbeatFlushIntervalSeconds, out heartbeatIntervalSeconds))
+            {
+                Console.WriteLine("HeartBeatFlushIntervalSeconds parameter is invalid in Configuration. The value is set to 60 sec.");
+                heartbeatIntervalSeconds = 60;
+            }
 
             _flushTimer = new Timer
             {
-                Interval = int.Parse(heartbeatFlushIntervalSeconds)*1000
+                Interval = heartbeatIntervalSeconds * 1000
             };
             _flushTimer.Elapsed += _flushTimer_Elapsed;
             _flushTimer.Start();

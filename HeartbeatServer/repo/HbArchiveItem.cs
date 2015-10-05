@@ -2,6 +2,7 @@
 
 namespace HeartbeatServer
 {
+    [Serializable]
     public class HbArchiveItem
     {
         /// <summary>
