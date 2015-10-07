@@ -8,6 +8,9 @@ using Heartbeat;
 using Timer = System.Timers.Timer;
 using System.Diagnostics;
 using System.Configuration;
+using HeartbeatServer.Request;
+using HeartbeatServer.Response;
+using HeartbeatServer.dto;
 
 namespace HeartbeatServer
 {
@@ -115,8 +118,7 @@ namespace HeartbeatServer
                     Monitor.Exit(_allServicesInfo);
             }
         }
-
-
+        
         private void Archive()
         {
             Console.WriteLine("Archive started.");
@@ -223,6 +225,23 @@ namespace HeartbeatServer
         private void FlushTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             Archive();
+        }
+
+        public GetAllServersResponse AllServers(GetAllServersRequest request)
+        {
+            var response = new GetAllServersResponse();
+            response.ServerInfoList = new List<ServerInfo>();
+
+            var list = _hbArchiveItems.GroupBy(x => x.ClientMachine).Select(grp => grp.First()).ToList();
+
+            foreach (var hbArchiveItem in list)
+            {
+                response.ServerInfoList.Add(new ServerInfo()
+                {
+                    ServerName = hbArchiveItem.ClientMachine
+                });
+            }           
+            return response;
         }
     }
 }

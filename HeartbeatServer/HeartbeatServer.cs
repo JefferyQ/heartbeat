@@ -1,38 +1,44 @@
 ﻿using System.Collections.Generic;
 using Heartbeat;
+using HeartbeatServer.Request;
+using HeartbeatServer.Response;
 
 namespace HeartbeatServer
 {
     class HeartbeatServer : IHeartbeatServer
     {
-        private readonly AppStatsProcessor _appStatsProcessor;
-        
-
-        public HeartbeatServer(AppStatsProcessor appStatsProcessor
-            )
+        private readonly HbArchiveProcessor _hbArchiveProcessor;
+        public HeartbeatServer(HbArchiveProcessor hbArchiveProcessor)
         {
-            _appStatsProcessor = appStatsProcessor;
-            
+            _hbArchiveProcessor = hbArchiveProcessor;
         }
 
-        public SummaryResponse GetSummary()
+        public GetAllServersResponse GetAllServers(GetAllServersRequest request)
         {
-            return new SummaryResponse
-            {
-                //Servers = _appStatsProcessor.GetServers(),
-                //TotalAppStats = _appStatsProcessor.GetAppStatsCount()
-            };
+            return _hbArchiveProcessor.AllServers(request);
         }
 
-        public List<AppStats> GetAllAppStats()
-        {
-            return null;
-            //return _appStatsProcessor.GetAllAppStats();
-        }
 
-        public void SaveDisk()
-        {
-            //BinarySerialization.WriteToBinaryFile("C:/Users/cozkoc/Desktop/heartbeat_service/heartbeat/Dump.hb", GetAllAppStats());
-        }
+
+
+        //public SummaryResponse GetSummary()
+        //{
+        //    return new SummaryResponse
+        //    {
+        //        //Servers = _appStatsProcessor.GetServers(),
+        //        //TotalAppStats = _appStatsProcessor.GetAppStatsCount()
+        //    };
+        //}
+
+        //public List<AppStats> GetAllAppStats()
+        //{
+        //    return null;
+        //    //return _appStatsProcessor.GetAllAppStats();
+        //}
+
+        //public void SaveDisk()
+        //{
+        //    //BinarySerialization.WriteToBinaryFile("C:/Users/cozkoc/Desktop/heartbeat_service/heartbeat/Dump.hb", GetAllAppStats());
+        //}
     }
 }
