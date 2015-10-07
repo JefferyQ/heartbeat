@@ -9,16 +9,10 @@ namespace HeartbeatServer
     [ServiceContract]
     public interface IHeartbeatServer
     {
-        //[OperationContract]
-        //SummaryResponse GetSummary();
-
-        //[OperationContract]
-        //List<AppStats> GetAllAppStats();
-
-        //[OperationContract]
-        //void SaveDisk();
+        [OperationContract]
+        GetServersResponse GetServers(GetServersRequest request);
 
         [OperationContract]
-        GetAllServersResponse GetAllServers(GetAllServersRequest request);
+        GetServicesResponse GetServices(GetServicesRequest request);
     }
 }

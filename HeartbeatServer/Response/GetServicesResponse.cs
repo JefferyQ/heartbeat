@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 namespace HeartbeatServer.Response
 {
-    public class GetAllServersResponse
+    public class GetServicesResponse
     {
-        public List<ServerInfo> ServerInfoList { get; set; } 
+        public List<ServiceInfo> ServiceInfoList { get; set; } 
     }
 }

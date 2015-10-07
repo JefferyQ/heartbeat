@@ -227,12 +227,12 @@ namespace HeartbeatServer
             Archive();
         }
 
-        public GetAllServersResponse AllServers(GetAllServersRequest request)
+        public GetServersResponse GetServers(GetServersRequest request)
         {
-            var response = new GetAllServersResponse();
+            var response = new GetServersResponse();
             response.ServerInfoList = new List<ServerInfo>();
 
-            var list = _hbArchiveItems.GroupBy(x => x.ClientMachine).Select(grp => grp.First()).ToList();
+            var list = _hbArchiveItems.Where(w => w.ApplicationName == request.ServiceName || request.AllServers).GroupBy(x => x.ClientMachine).Select(grp => grp.First()).ToList();
 
             foreach (var hbArchiveItem in list)
             {
@@ -241,6 +241,17 @@ namespace HeartbeatServer
                     ServerName = hbArchiveItem.ClientMachine
                 });
             }           
+            return response;
+        }
+
+        public GetServicesResponse GetServices(GetServicesRequest request)
+        {
+            var response = new GetServicesResponse();
+            response.ServiceInfoList = new List<ServiceInfo>();
+
+            response.ServiceInfoList =
+                _allServicesInfo.Where(w => w.ServerName == request.ServerName || request.AllServices).ToList();
+            
             return response;
         }
     }

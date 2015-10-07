@@ -13,12 +13,16 @@ namespace HeartbeatServer
             _hbArchiveProcessor = hbArchiveProcessor;
         }
 
-        public GetAllServersResponse GetAllServers(GetAllServersRequest request)
+        public GetServersResponse GetServers(GetServersRequest request)
         {
-            return _hbArchiveProcessor.AllServers(request);
+            return _hbArchiveProcessor.GetServers(request);
         }
 
-
+        public GetServicesResponse GetServices(GetServicesRequest request)
+        {
+            return _hbArchiveProcessor.GetServices(request);
+        }
+        
 
 
         //public SummaryResponse GetSummary()
