@@ -22,27 +22,15 @@ namespace HeartbeatServer
         {
             return _hbArchiveProcessor.GetServices(request);
         }
-        
 
+        public GetTopMethodLoadResponse GetTopMethods(GetTopMethodLoadRequest request)
+        {
+            return _hbArchiveProcessor.TopNMethods(request);
+        }
 
-        //public SummaryResponse GetSummary()
-        //{
-        //    return new SummaryResponse
-        //    {
-        //        //Servers = _appStatsProcessor.GetServers(),
-        //        //TotalAppStats = _appStatsProcessor.GetAppStatsCount()
-        //    };
-        //}
-
-        //public List<AppStats> GetAllAppStats()
-        //{
-        //    return null;
-        //    //return _appStatsProcessor.GetAllAppStats();
-        //}
-
-        //public void SaveDisk()
-        //{
-        //    //BinarySerialization.WriteToBinaryFile("C:/Users/cozkoc/Desktop/heartbeat_service/heartbeat/Dump.hb", GetAllAppStats());
-        //}
+        public GetMethodDetailResponse GetMethodDetails(GetMethodDetailRequest request)
+        {
+            return _hbArchiveProcessor.MethodDetails(request);
+        }
     }
 }
