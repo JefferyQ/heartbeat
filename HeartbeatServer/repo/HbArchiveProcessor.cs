@@ -299,5 +299,30 @@ namespace HeartbeatServer
 
             return response;
         }
+
+        public GetMethodsOfServiceResponse GetMethodsOfService(GetMethodsOfServiceRequest request)
+        {
+            var response = new GetMethodsOfServiceResponse();
+            response.MethodList = new List<MethodDetails>();
+
+            var list =
+                _hbArchiveItems.Where(
+                    w => w.ClientMachine == request.ServerName && w.ApplicationName == request.ServiceName)
+                    .GroupBy(x => x.MethodName)
+                    .Select(grp => grp.First())
+                    .ToList();
+
+            foreach (var hbArchiveItem in list)
+            {
+                response.MethodList.Add(new MethodDetails()
+                {
+                    ApplicationName = hbArchiveItem.ApplicationName,
+                    ServerName = hbArchiveItem.ClientMachine,
+                    MethodName = hbArchiveItem.MethodName
+                });
+            }
+
+            return response;
+        }
     }
 }

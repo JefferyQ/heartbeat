@@ -32,5 +32,10 @@ namespace HeartbeatServer
         {
             return _hbArchiveProcessor.MethodDetails(request);
         }
+
+        public GetMethodsOfServiceResponse GetMethodsOfService(GetMethodsOfServiceRequest request)
+        {
+            return _hbArchiveProcessor.GetMethodsOfService(request);
+        }
     }
 }
