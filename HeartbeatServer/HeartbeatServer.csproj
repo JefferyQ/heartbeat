@@ -81,6 +81,8 @@
     <Compile Include="AppStatsProcessor.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="BinarySerialization.cs" />
+    <Compile Include="dto\MethodDetails.cs" />
+    <Compile Include="dto\MethodLoadDetails.cs" />
     <Compile Include="dto\ServerInfo.cs" />
     <Compile Include="dto\SummaryResponse.cs" />
     <Compile Include="IHeartbeatServer.cs" />
@@ -92,7 +94,11 @@
     <Compile Include="repo\HbArchiveProcessor.cs" />
     <Compile Include="repo\HbTempArchiveItem.cs" />
     <Compile Include="Request\GetAllServersRequest.cs" />
+    <Compile Include="Request\GetMethodDetailRequest.cs" />
+    <Compile Include="Request\GetTopMethodLoadRequest.cs" />
     <Compile Include="Response\GetAllServersResponse.cs" />
+    <Compile Include="Response\GetMethodDetailResponse.cs" />
+    <Compile Include="Response\GetTopMethodLoadResponse.cs" />
     <Compile Include="UdpServer.cs" />
   </ItemGroup>
   <ItemGroup>

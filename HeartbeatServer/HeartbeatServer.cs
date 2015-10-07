@@ -18,6 +18,16 @@ namespace HeartbeatServer
             return _hbArchiveProcessor.AllServers(request);
         }
 
+        public GetTopMethodLoadResponse GetTopMethods(GetTopMethodLoadRequest request)
+        {
+            return _hbArchiveProcessor.TopNMethods(request);
+        }
+
+        public GetMethodDetailResponse GetMethodDetails(GetMethodDetailRequest request)
+        {
+            return _hbArchiveProcessor.MethodDetails(request);
+        }
+
 
 
 

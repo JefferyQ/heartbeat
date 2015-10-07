@@ -243,5 +243,52 @@ namespace HeartbeatServer
             }           
             return response;
         }
+
+        public GetTopMethodLoadResponse TopNMethods(GetTopMethodLoadRequest request)
+        {
+
+            var response = new GetTopMethodLoadResponse();
+            response.MethodLoadDetailList = new List<MethodLoadDetails>();
+
+            var list = _hbArchiveItems.Where(x => x.ClientMachine == request.ServerName && x.ApplicationName == request.ServiceName);
+
+            foreach (var hbArchieveItem in list)
+                {
+                    response.MethodLoadDetailList.Add(new MethodLoadDetails()
+                    {
+                        MethodName = hbArchieveItem.MethodName,
+                        ApplicationName = hbArchieveItem.ApplicationName,
+                        ServerName = hbArchieveItem.ClientMachine,
+                        Load = hbArchieveItem.AverageDuration * hbArchieveItem.ExecutionCount,
+                        ExceptionCount = hbArchieveItem.ExceptionCount,
+                        ExecutionCount = hbArchieveItem.ExecutionCount
+
+                    });
+                }
+
+            response.MethodLoadDetailList = response.MethodLoadDetailList.OrderByDescending(or => or.Load).Take(request.MethodNumber).ToList();
+            return response;
+        }
+
+        public GetMethodDetailResponse MethodDetails(GetMethodDetailRequest request)
+        {
+
+            var response = new GetMethodDetailResponse();
+            response.Details = new MethodDetails();
+
+            var list = _hbArchiveItems.Where(x => x.ClientMachine == request.ServerName && x.ApplicationName == request.ServiceName && x.MethodName == request.MethodName);
+
+            response.Details.MethodName = request.MethodName;
+            response.Details.ApplicationName = request.ServiceName;
+            response.Details.TotalExceptionCount = list.Sum(s => s.ExceptionCount);
+            response.Details.OverallAverageDuration = list.Sum(s => s.AverageDuration) / list.Sum(s => s.ExecutionCount);
+            response.Details.FirstExecution = list.OrderBy(or => or.ArchieveDate).First().ArchieveDate;
+            response.Details.LastExecution = list.OrderBy(or => or.ArchieveDate).Last().ArchieveDate;
+            response.Details.TotalExecutionCount = list.Sum(s => s.ExecutionCount);
+
+            return response;
+
+
+        }
     }
 }
