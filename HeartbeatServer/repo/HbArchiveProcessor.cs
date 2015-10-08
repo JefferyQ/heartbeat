@@ -59,7 +59,7 @@ namespace HeartbeatServer
                 {
 
                     // Add or Update hbTempArchiveItems
-                    var existingItem = _hbTempArchiveItems.SingleOrDefault(m => m.ApplicationName == newAppStats.ApplicationName && m.MethodName == newMethodStats.MethodName);
+                    var existingItem = _hbTempArchiveItems.SingleOrDefault(m => m.ClientMachine == newAppStats.ClientMachine && m.ApplicationName == newAppStats.ApplicationName && m.MethodName == newMethodStats.MethodName);
                     if (existingItem == null)
                     {
                         _hbTempArchiveItems.Add(new HbTempArchiveItem
@@ -290,6 +290,7 @@ namespace HeartbeatServer
 
             response.Details.MethodName = request.MethodName;
             response.Details.ApplicationName = request.ServiceName;
+            response.Details.ServerName = request.ServerName;
             response.Details.TotalExceptionCount = list.Sum(s => s.ExceptionCount);
             response.Details.OverallAverageDuration = list.Sum(s => s.AverageDuration) / list.Sum(s => s.ExecutionCount);
             response.Details.FirstExecution = list.OrderBy(or => or.ArchieveDate).First().ArchieveDate;
@@ -322,10 +323,10 @@ namespace HeartbeatServer
 
             }
 
-            if (request.DataType == "average")
+            if (request.DataType == DataTypes.Average)
                 response.Details =
                     response.Details.OrderByDescending(or => or.AverageDuration).Take(request.MethodNumber).ToList();
-            else
+            else if (request.DataType == DataTypes.ExecutionCount)
                 response.Details =
                     response.Details.OrderByDescending(or => or.ExecutionCount).Take(request.MethodNumber).ToList();
 
