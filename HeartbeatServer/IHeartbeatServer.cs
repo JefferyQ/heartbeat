@@ -23,5 +23,8 @@ namespace HeartbeatServer
 
         [OperationContract]
         GetMethodDurationorCountResponse GetTopMethodDurationOrCount(GetMethodDurationOrCountRequest request);
+
+        [OperationContract]
+        GetMethodsOfServiceResponse GetMethodsOfService(GetMethodsOfServiceRequest request);
     }
 }

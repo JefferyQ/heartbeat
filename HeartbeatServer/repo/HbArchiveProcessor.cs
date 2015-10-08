@@ -305,7 +305,11 @@ namespace HeartbeatServer
             var response = new GetMethodDurationorCountResponse();
             response.Details = new List<AverageOrDurationDetails>();
 
-            var list = _hbArchiveItems.Where(x => x.ArchieveDate.Day == today.Day && x.MethodName == request.MethodName && x.ClientMachine == request.ServerName && x.ApplicationName == request.ServiceName);
+            var list =
+                _hbArchiveItems.Where(
+                    x =>
+                        x.ArchieveDate.Day == today.Day && x.MethodName == request.MethodName &&
+                        x.ClientMachine == request.ServerName && x.ApplicationName == request.ServiceName);
 
             foreach (var hbArchieveItem in list)
             {
@@ -326,6 +330,33 @@ namespace HeartbeatServer
                     response.Details.OrderByDescending(or => or.ExecutionCount).Take(request.Count).ToList();
 
             return response;
+
+        }
+
+        public GetMethodsOfServiceResponse GetMethodsOfService(GetMethodsOfServiceRequest request)
+        {
+            var response = new GetMethodsOfServiceResponse();
+            response.MethodList = new List<MethodDetails>();
+
+            var list =
+                _hbArchiveItems.Where(
+                    w => w.ClientMachine == request.ServerName && w.ApplicationName == request.ServiceName)
+                    .GroupBy(x => x.MethodName)
+                    .Select(grp => grp.First())
+                    .ToList();
+
+            foreach (var hbArchiveItem in list)
+            {
+                response.MethodList.Add(new MethodDetails()
+                {
+                    ApplicationName = hbArchiveItem.ApplicationName,
+                    ServerName = hbArchiveItem.ClientMachine,
+                    MethodName = hbArchiveItem.MethodName
+                });
+            }
+
+            return response;
+
         }
     }
 }
