@@ -81,6 +81,7 @@
     <Compile Include="AppStatsProcessor.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="BinarySerialization.cs" />
+    <Compile Include="dto\AverageOrDurationDetails.cs" />
     <Compile Include="dto\MethodDetails.cs" />
     <Compile Include="dto\MethodLoadDetails.cs" />
     <Compile Include="dto\ServerInfo.cs" />
@@ -93,8 +94,10 @@
     <Compile Include="repo\HbArchiveItem.cs" />
     <Compile Include="repo\HbArchiveProcessor.cs" />
     <Compile Include="repo\HbTempArchiveItem.cs" />
+    <Compile Include="Request\GetMethodDurationOrCountRequest.cs" />
     <Compile Include="Request\GetServicesRequest.cs" />
     <Compile Include="Request\GetServersRequest.cs" />
+    <Compile Include="Response\GetMethodDurationorCountResponse.cs" />
     <Compile Include="Response\GetServicesResponse.cs" />
     <Compile Include="Response\GetServersResponse.cs" />
     <Compile Include="Request\GetMethodDetailRequest.cs" />

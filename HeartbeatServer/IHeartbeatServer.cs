@@ -20,5 +20,8 @@ namespace HeartbeatServer
 
         [OperationContract]
         GetMethodDetailResponse GetMethodDetails(GetMethodDetailRequest request);
+
+        [OperationContract]
+        GetMethodDurationorCountResponse GetTopMethodDurationOrCount(GetMethodDurationOrCountRequest request);
     }
 }

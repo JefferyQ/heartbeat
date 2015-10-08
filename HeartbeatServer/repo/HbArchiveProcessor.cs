@@ -284,8 +284,7 @@ namespace HeartbeatServer
         public GetMethodDetailResponse MethodDetails(GetMethodDetailRequest request)
         {
 
-            var response = new GetMethodDetailResponse();
-            response.Details = new MethodDetails();
+            var response = new GetMethodDetailResponse {Details = new MethodDetails()};
 
             var list = _hbArchiveItems.Where(x => x.ClientMachine == request.ServerName && x.ApplicationName == request.ServiceName && x.MethodName == request.MethodName);
 
@@ -296,6 +295,35 @@ namespace HeartbeatServer
             response.Details.FirstExecution = list.OrderBy(or => or.ArchieveDate).First().ArchieveDate;
             response.Details.LastExecution = list.OrderBy(or => or.ArchieveDate).Last().ArchieveDate;
             response.Details.TotalExecutionCount = list.Sum(s => s.ExecutionCount);
+
+            return response;
+        }
+
+        public GetMethodDurationorCountResponse DurationOrCount(GetMethodDurationOrCountRequest request)
+        {
+            var today = DateTime.Now;
+            var response = new GetMethodDurationorCountResponse();
+            response.Details = new List<AverageOrDurationDetails>();
+
+            var list = _hbArchiveItems.Where(x => x.ArchieveDate.Day == today.Day && x.MethodName == request.MethodName && x.ClientMachine == request.ServerName && x.ApplicationName == request.ServiceName);
+
+            foreach (var hbArchieveItem in list)
+            {
+                response.Details.Add(new AverageOrDurationDetails()
+                {
+                    AverageDuration = hbArchieveItem.AverageDuration,
+                    ExecutionTime = hbArchieveItem.ArchieveDate,
+                    ExecutionCount = hbArchieveItem.ExecutionCount
+                });
+
+            }
+
+            if (request.DataType == "average")
+                response.Details =
+                    response.Details.OrderByDescending(or => or.AverageDuration).Take(request.Count).ToList();
+            else
+                response.Details =
+                    response.Details.OrderByDescending(or => or.ExecutionCount).Take(request.Count).ToList();
 
             return response;
         }
