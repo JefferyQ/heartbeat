@@ -144,7 +144,7 @@ namespace HeartbeatServer
                 {
                     var existingItem =
                         _hbArchiveItems.SingleOrDefault(
-                            m => m.ApplicationName == newItem.ApplicationName && m.MethodName == newItem.MethodName
+                            m => m.ApplicationName == newItem.ApplicationName && m.MethodName == newItem.MethodName && m.ClientMachine == newItem.ClientMachine
                                  && m.Day == day && m.Hour == hour);
 
                     if (existingItem == null)
@@ -324,10 +324,10 @@ namespace HeartbeatServer
 
             if (request.DataType == "average")
                 response.Details =
-                    response.Details.OrderByDescending(or => or.AverageDuration).Take(request.Count).ToList();
+                    response.Details.OrderByDescending(or => or.AverageDuration).Take(request.MethodNumber).ToList();
             else
                 response.Details =
-                    response.Details.OrderByDescending(or => or.ExecutionCount).Take(request.Count).ToList();
+                    response.Details.OrderByDescending(or => or.ExecutionCount).Take(request.MethodNumber).ToList();
 
             return response;
 

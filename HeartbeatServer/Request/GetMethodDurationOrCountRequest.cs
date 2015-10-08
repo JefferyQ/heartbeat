@@ -7,7 +7,7 @@ namespace HeartbeatServer.Request
         public string MethodName { get; set; }
         public string ServerName { get; set; }
         public string ServiceName { get; set; }
-        public int Count { get; set; }
+        public int MethodNumber { get; set; }
         public string DataType { get; set; }
     }
 }
