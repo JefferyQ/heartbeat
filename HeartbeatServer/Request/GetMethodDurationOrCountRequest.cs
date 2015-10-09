@@ -1,4 +1,5 @@
 ﻿
+using HeartbeatServer.dto;
 
 namespace HeartbeatServer.Request
 {
@@ -8,6 +9,6 @@ namespace HeartbeatServer.Request
         public string ServerName { get; set; }
         public string ServiceName { get; set; }
         public int MethodNumber { get; set; }
-        public string DataType { get; set; }
+        public DataTypes DataType { get; set; }
     }
 }

@@ -82,6 +82,7 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="BinarySerialization.cs" />
     <Compile Include="dto\AverageOrDurationDetails.cs" />
+    <Compile Include="dto\DataTypes.cs" />
     <Compile Include="dto\MethodDetails.cs" />
     <Compile Include="dto\MethodLoadDetails.cs" />
     <Compile Include="dto\ServerInfo.cs" />
