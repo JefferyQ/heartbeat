@@ -1,0 +1,78 @@
+﻿@using HeartBeatPortal.MultiResources
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title - Heartbeat Portal</title>
+
+    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css"/>
+    <link href="@Url.Content("~/Content/VivaStyle.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2015.1.318/kendo.common.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2015.1.318/kendo.mobile.all.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2015.1.318/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2015.1.318/kendo.flat.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2015.1.318/kendo.dataviz.flat.min.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/kendo/2015.1.318/jquery.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2015.1.318/jszip.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2015.1.318/kendo.all.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2015.1.318/kendo.aspnetmvc.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row k-header">
+            <h1>@Multi.PageTitle @Html.DropDownList("Languages", (IEnumerable<SelectListItem>)ViewBag.Languages, Multi.Language, new { @id = "a" })</h1>
+             
+        </div>
+    </div>
+
+    <div id="container-1">
+        <div id="menu-1">
+            @Html.Partial("_KendoMenu")
+        </div>
+        <div id="screen-1">
+            @RenderBody()
+        </div>
+
+        <footer class="footer">
+            <div class="container-fluid">
+                <p class="text-muted">@Multi.PageTitle</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
+
+<script>
+
+    $(document).ready(function () {
+        var selectedValue = $('#Language').val();
+        $("#Languages").val(selectedValue);
+    });
+
+
+    $("#Languages").change(function (e) {
+        var language = $("#Languages option:selected").val();
+        $("#Language").val(language);
+        CreateCookie("Lang", language, 0);
+        window.location.reload();
+    });
+
+    function CreateCookie(name, value, days) {
+        var expires = "";
+        var cookieName = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires =" + date.toGMTString();
+            cookieName = name + "=" + value + expires + ";path = /";
+            document.cookie = cookieName;
+        }
+        else {
+            expires = "";
+            document.cookie = name + "=" + value + expires + ";path = /";
+        }
+    }
+
+</script>
+

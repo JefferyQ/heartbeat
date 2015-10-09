@@ -1,0 +1,11 @@
+@model Viva.Constants.RedemptionStatuses?
+
+@(Html.Kendo().DropDownList()
+        .Name("RedemptionStatus") // Name of the widget should be the same as the name of the property
+        .DataValueField("RedemptionStatusId") // The value of the dropdown is taken from the RedemptionStatusId property
+        .DataTextField("RedemptionStatusName") // The text of the items is taken from the RedemptionStatusName property
+        .BindTo((System.Collections.IEnumerable)ViewData["redemptionStatuses"]) // A list of all which is populated in the controller
+)
+
+
+

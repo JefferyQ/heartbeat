@@ -1,0 +1,21 @@
+﻿@{
+    Layout = null;
+}
+
+
+@(Html.Kendo().PanelBar()
+              .Name("panelbar")
+              .ExpandMode(PanelBarExpandMode.Multiple)
+              .HtmlAttributes(new { style = "width:100%" })
+              .Items(panelbar =>
+              {
+                  panelbar.Add().Text("Home").Action("Index", "Home");
+                  
+                  //panelbar.Add().Text("Transaction Management")
+                  //    .Items(transaction =>
+                  //    {
+                  //        transaction.Add().Text("Operational Transactions").Action("OperationalTransactionsPage", "Transaction");
+
+                  //    });
+              })
+)

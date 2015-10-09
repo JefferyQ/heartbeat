@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="HeartbeatServer" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:9122/HeartbeatServer?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:9122/HeartbeatServer?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:9122/HeartbeatServer?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/HeartbeatServer.Request" />
+      <xsd:import schemaLocation="http://localhost:9122/HeartbeatServer?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/HeartbeatServer.Response" />
+      <xsd:import schemaLocation="http://localhost:9122/HeartbeatServer?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/HeartbeatServer.dto" />
+      <xsd:import schemaLocation="http://localhost:9122/HeartbeatServer?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/HeartbeatServer" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IHeartbeatServer_GetServers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetServers" />
+  </wsdl:message>
+  <wsdl:message name="IHeartbeatServer_GetServers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetServersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHeartbeatServer_GetServices_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetServices" />
+  </wsdl:message>
+  <wsdl:message name="IHeartbeatServer_GetServices_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetServicesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHeartbeatServer_GetTopMethods_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTopMethods" />
+  </wsdl:message>
+  <wsdl:message name="IHeartbeatServer_GetTopMethods_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTopMethodsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHeartbeatServer_GetMethodDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMethodDetails" />
+  </wsdl:message>
+  <wsdl:message name="IHeartbeatServer_GetMethodDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMethodDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHeartbeatServer_GetTopMethodDurationOrCount_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTopMethodDurationOrCount" />
+  </wsdl:message>
+  <wsdl:message name="IHeartbeatServer_GetTopMethodDurationOrCount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTopMethodDurationOrCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHeartbeatServer_GetMethodsOfService_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMethodsOfService" />
+  </wsdl:message>
+  <wsdl:message name="IHeartbeatServer_GetMethodsOfService_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMethodsOfServiceResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IHeartbeatServer">
+    <wsdl:operation name="GetServers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHeartbeatServer/GetServers" message="tns:IHeartbeatServer_GetServers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHeartbeatServer/GetServersResponse" message="tns:IHeartbeatServer_GetServers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetServices">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHeartbeatServer/GetServices" message="tns:IHeartbeatServer_GetServices_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHeartbeatServer/GetServicesResponse" message="tns:IHeartbeatServer_GetServices_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTopMethods">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHeartbeatServer/GetTopMethods" message="tns:IHeartbeatServer_GetTopMethods_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHeartbeatServer/GetTopMethodsResponse" message="tns:IHeartbeatServer_GetTopMethods_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMethodDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHeartbeatServer/GetMethodDetails" message="tns:IHeartbeatServer_GetMethodDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHeartbeatServer/GetMethodDetailsResponse" message="tns:IHeartbeatServer_GetMethodDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTopMethodDurationOrCount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHeartbeatServer/GetTopMethodDurationOrCount" message="tns:IHeartbeatServer_GetTopMethodDurationOrCount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHeartbeatServer/GetTopMethodDurationOrCountResponse" message="tns:IHeartbeatServer_GetTopMethodDurationOrCount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMethodsOfService">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHeartbeatServer/GetMethodsOfService" message="tns:IHeartbeatServer_GetMethodsOfService_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHeartbeatServer/GetMethodsOfServiceResponse" message="tns:IHeartbeatServer_GetMethodsOfService_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IHeartbeatServer" type="tns:IHeartbeatServer">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetServers">
+      <soap:operation soapAction="http://tempuri.org/IHeartbeatServer/GetServers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetServices">
+      <soap:operation soapAction="http://tempuri.org/IHeartbeatServer/GetServices" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTopMethods">
+      <soap:operation soapAction="http://tempuri.org/IHeartbeatServer/GetTopMethods" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMethodDetails">
+      <soap:operation soapAction="http://tempuri.org/IHeartbeatServer/GetMethodDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTopMethodDurationOrCount">
+      <soap:operation soapAction="http://tempuri.org/IHeartbeatServer/GetTopMethodDurationOrCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMethodsOfService">
+      <soap:operation soapAction="http://tempuri.org/IHeartbeatServer/GetMethodsOfService" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="HeartbeatServer">
+    <wsdl:port name="BasicHttpBinding_IHeartbeatServer" binding="tns:BasicHttpBinding_IHeartbeatServer">
+      <soap:address location="http://localhost:9122/HeartbeatServerBasicHttpEndPoint" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
