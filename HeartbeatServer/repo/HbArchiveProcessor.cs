@@ -59,7 +59,7 @@ namespace HeartbeatServer
                 {
 
                     // Add or Update hbTempArchiveItems
-                    var existingItem = _hbTempArchiveItems.SingleOrDefault(m => m.ApplicationName == newAppStats.ApplicationName && m.MethodName == newMethodStats.MethodName);
+                    var existingItem = _hbTempArchiveItems.SingleOrDefault(m=> m.ClientMachine == newAppStats.ClientMachine &&  m.ApplicationName == newAppStats.ApplicationName && m.MethodName == newMethodStats.MethodName);
                     if (existingItem == null)
                     {
                         _hbTempArchiveItems.Add(new HbTempArchiveItem
