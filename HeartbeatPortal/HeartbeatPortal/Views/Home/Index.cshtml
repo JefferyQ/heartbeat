@@ -1,3 +1,166 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+
+<div class="dropdown-section">
+    <h2>View Details</h2>
+    <p>
+        <label for="servers">Servers:</label>
+        @(Html.Kendo().DropDownList()
+              .Name("servers")
+              .HtmlAttributes(new {style = "width:300px"})
+              .OptionLabel("Select server...")
+              .DataTextField("Text")
+              .DataValueField("Value")
+              .DataSource(source =>
+              {
+                  source.Read(read =>
+                  {
+                      read.Action("GetServers", "DropDownList");
+                  });
+              })
+              )
+    </p>
+    <p>
+        <label for="services">Services:</label>
+        @(Html.Kendo().DropDownList()
+              .Name("services")
+              .HtmlAttributes(new {style = "width:300px"})
+              .OptionLabel("Select service...")
+              .DataTextField("Text")
+              .DataValueField("Value")
+              .DataSource(source =>
+              {
+                  source.Read(read =>
+                  {
+                      read.Action("GetServices", "DropDownList")
+                          .Data("filterServices");
+                  })
+                      .ServerFiltering(true);
+              })
+              .Enable(false)
+              .AutoBind(false)
+              .CascadeFrom("servers")
+              )
+        <script>
+            function filterServices() {
+
+                var server = { ServerName: $("#servers").data("kendoDropDownList").text(), ServiceName: "" };
+                return server;
+            }
+        </script>
+    </p>
+    <p>
+        <label for="methods">Methods:</label>
+        @(Html.Kendo().DropDownList()
+              .Name("methods")
+              .HtmlAttributes(new {style = "width:300px"})
+              .OptionLabel("Select method...")
+              .DataTextField("Text")
+              .DataValueField("Value")
+              .DataSource(source =>
+              {
+                  source.Read(read =>
+                  {
+                      read.Action("GetMethods", "DropDownList")
+                          .Data("filterMethods");
+                  })
+                      .ServerFiltering(true);
+              })
+              .Enable(false)
+              .AutoBind(false)
+              .CascadeFrom("services")
+              )
+        <script>
+            function filterMethods() {
+                var service = { ServerName: $("#servers").data("kendoDropDownList").text(), ServiceName: $("#services").data("kendoDropDownList").text() };
+                return service;
+            }
+        </script>
+    </p>
+    <p>
+        @(Html.Kendo().Button()
+              .Name("GetDetails")
+              .HtmlAttributes(new {type = "button", @class = "k-button"})
+              .Content("Select")
+              .Events(ev => ev.Click("onClick"))
+              )
+
+        <script>
+            function onClick(e) {
+
+                var serverName = $("#servers").data("kendoDropDownList").text().toString();
+                var serviceName = $("#services").data("kendoDropDownList").text().toString();
+                var methodName = $("#methods").data("kendoDropDownList").text().toString();
+
+                if ($("#servers").val() == "") {
+                    alert("Please select a server");
+                }
+
+                else if ($("#services").val() == "" && $("#methods").val() == "") {
+
+                    var url = '@Html.Raw(Url.Action("Servers", "GetDetails"))';
+                    window.location.href = url + '?server=' + serverName;
+                }
+
+                else if ($("#methods").val() == "") {
+
+                    var url = '@Html.Raw(Url.Action("Services", "GetDetails"))';
+                    window.location.href = url + '?server=' + serverName + '&service=' + serviceName;
+                }
+
+                else {
+                    var url = '@Html.Raw(Url.Action("Methods", "GetDetails"))';
+                    window.location.href = url + '?server=' + serverName + '&service=' + serviceName +  '&method=' + methodName;
+                }
+
+            }
+
+        </script>
+    </p>
+</div>
+<script>
+    $(document).ready(function() {
+        var categories = $("#servers").data("kendoDropDownList"),
+            products = $("#services").data("kendoDropDownList"),
+            orders = $("#methods").data("kendoDropDownList");
+
+        //$("#get").click(function () {
+        //    var categoryInfo = "\nCategory: { id: " + categories.value() + ", name: " + categories.text() + " }",
+        //        productInfo = "\nProduct: { id: " + products.value() + ", name: " + products.text() + " }",
+        //        orderInfo = "\nOrder: { id: " + orders.value() + ", name: " + orders.text() + " }";
+
+        //    alert("Order details:\n" + categoryInfo + productInfo + orderInfo);
+        //});
+    });
+</script>
+<style>
+    .dropdown-section {
+        width: 460px;
+        padding: 30px;
+    }
+
+    .dropdown-section h2 {
+        text-transform: uppercase;
+        font-size: 1.5em;
+        margin-bottom: 30px;
+    }
+
+    .dropdown-section label {
+        display: inline-block;
+        width: 120px;
+        padding-right: 5px;
+        text-align: left;
+    }
+
+    .dropdown-section .k-button {
+        margin-top: 10px;
+        width: 80px;
+        height: 35px;
+        margin-left: 220px;
+    }
+
+    .k-readonly {
+        color: gray;
+    }
+</style>

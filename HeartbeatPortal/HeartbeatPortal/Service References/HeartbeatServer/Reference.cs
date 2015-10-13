@@ -896,7 +896,7 @@ namespace HeartBeatPortal.HeartbeatServer {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DataTypeField;
+        private HeartBeatPortal.HeartbeatServer.DataTypes DataTypeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string MethodNameField;
@@ -921,12 +921,12 @@ namespace HeartBeatPortal.HeartbeatServer {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DataType {
+        public HeartBeatPortal.HeartbeatServer.DataTypes DataType {
             get {
                 return this.DataTypeField;
             }
             set {
-                if ((object.ReferenceEquals(this.DataTypeField, value) != true)) {
+                if ((this.DataTypeField.Equals(value) != true)) {
                     this.DataTypeField = value;
                     this.RaisePropertyChanged("DataType");
                 }
@@ -993,6 +993,17 @@ namespace HeartBeatPortal.HeartbeatServer {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DataTypes", Namespace="http://schemas.datacontract.org/2004/07/HeartbeatServer.dto")]
+    public enum DataTypes : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Average = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ExecutionCount = 2,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1223,6 +1234,80 @@ namespace HeartBeatPortal.HeartbeatServer {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetAllMethodsRequest", Namespace="http://schemas.datacontract.org/2004/07/HeartbeatServer.Request")]
+    [System.SerializableAttribute()]
+    public partial class GetAllMethodsRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetAllMethodsResponse", Namespace="http://schemas.datacontract.org/2004/07/HeartbeatServer.Response")]
+    [System.SerializableAttribute()]
+    public partial class GetAllMethodsResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string[] MethodNameListField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string[] MethodNameList {
+            get {
+                return this.MethodNameListField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MethodNameListField, value) != true)) {
+                    this.MethodNameListField = value;
+                    this.RaisePropertyChanged("MethodNameList");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="HeartbeatServer.IHeartbeatServer")]
     public interface IHeartbeatServer {
@@ -1262,6 +1347,12 @@ namespace HeartBeatPortal.HeartbeatServer {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IHeartbeatServer/GetMethodsOfService", ReplyAction="http://tempuri.org/IHeartbeatServer/GetMethodsOfServiceResponse")]
         System.Threading.Tasks.Task<HeartBeatPortal.HeartbeatServer.GetMethodsOfServiceResponse> GetMethodsOfServiceAsync(HeartBeatPortal.HeartbeatServer.GetMethodsOfServiceRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IHeartbeatServer/GetAllMethods", ReplyAction="http://tempuri.org/IHeartbeatServer/GetAllMethodsResponse")]
+        HeartBeatPortal.HeartbeatServer.GetAllMethodsResponse GetAllMethods(HeartBeatPortal.HeartbeatServer.GetAllMethodsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IHeartbeatServer/GetAllMethods", ReplyAction="http://tempuri.org/IHeartbeatServer/GetAllMethodsResponse")]
+        System.Threading.Tasks.Task<HeartBeatPortal.HeartbeatServer.GetAllMethodsResponse> GetAllMethodsAsync(HeartBeatPortal.HeartbeatServer.GetAllMethodsRequest request);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1337,6 +1428,14 @@ namespace HeartBeatPortal.HeartbeatServer {
         
         public System.Threading.Tasks.Task<HeartBeatPortal.HeartbeatServer.GetMethodsOfServiceResponse> GetMethodsOfServiceAsync(HeartBeatPortal.HeartbeatServer.GetMethodsOfServiceRequest request) {
             return base.Channel.GetMethodsOfServiceAsync(request);
+        }
+        
+        public HeartBeatPortal.HeartbeatServer.GetAllMethodsResponse GetAllMethods(HeartBeatPortal.HeartbeatServer.GetAllMethodsRequest request) {
+            return base.Channel.GetAllMethods(request);
+        }
+        
+        public System.Threading.Tasks.Task<HeartBeatPortal.HeartbeatServer.GetAllMethodsResponse> GetAllMethodsAsync(HeartBeatPortal.HeartbeatServer.GetAllMethodsRequest request) {
+            return base.Channel.GetAllMethodsAsync(request);
         }
     }
 }

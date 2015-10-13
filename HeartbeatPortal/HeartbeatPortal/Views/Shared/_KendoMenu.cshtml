@@ -2,6 +2,7 @@
     Layout = null;
 }
 
+@model HeartBeatPortal.Models.ServerServiceMethodInfoModel
 
 @(Html.Kendo().PanelBar()
               .Name("panelbar")
@@ -9,13 +10,30 @@
               .HtmlAttributes(new { style = "width:100%" })
               .Items(panelbar =>
               {
-                  panelbar.Add().Text("Home").Action("Index", "Home");
-                  
-                  //panelbar.Add().Text("Transaction Management")
-                  //    .Items(transaction =>
-                  //    {
-                  //        transaction.Add().Text("Operational Transactions").Action("OperationalTransactionsPage", "Transaction");
+                  panelbar.Add().Text("Servers")
+                      .Items(servers =>
+                      {
+                          foreach (var machineName in Model.ServerName)
+                              servers.Add().Text(machineName);
+                      });
 
-                  //    });
+                  panelbar.Add().Text("Services")
+                      .Items(services =>
+                      {
+                          foreach (var applicationName in Model.ServiceName)
+                          {
+                              services.Add().Text(applicationName);
+                          }
+                      });
+
+                  panelbar.Add().Text("Methods")
+                      .Items(methods =>
+                      {
+                          foreach (var methodName in Model.MethodName)
+                          {
+                              methods.Add().Text(methodName);
+                          }
+                      });
+
               })
 )

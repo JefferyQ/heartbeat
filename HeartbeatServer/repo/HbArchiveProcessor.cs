@@ -256,6 +256,21 @@ namespace HeartbeatServer
             return response;
         }
 
+        public GetAllMethodsResponse GetMethods(GetAllMethodsRequest request)
+        {
+            var response = new GetAllMethodsResponse();
+            response.MethodNameList = new List<string>();
+
+            var list = _hbArchiveItems.GroupBy(g => g.MethodName).Select(s => s.Key);
+
+            foreach (var item in list)
+            {
+                response.MethodNameList.Add(item);
+            }
+
+            return response;
+        }
+
         public GetTopMethodLoadResponse TopNMethods(GetTopMethodLoadRequest request)
         {
 

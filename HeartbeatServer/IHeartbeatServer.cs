@@ -26,5 +26,8 @@ namespace HeartbeatServer
 
         [OperationContract]
         GetMethodsOfServiceResponse GetMethodsOfService(GetMethodsOfServiceRequest request);
+
+        [OperationContract]
+        GetAllMethodsResponse GetAllMethods(GetAllMethodsRequest request);
     }
 }

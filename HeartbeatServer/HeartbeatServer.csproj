@@ -95,7 +95,9 @@
     <Compile Include="repo\HbArchiveItem.cs" />
     <Compile Include="repo\HbArchiveProcessor.cs" />
     <Compile Include="repo\HbTempArchiveItem.cs" />
+    <Compile Include="Request\GetAllMethodsRequest.cs" />
     <Compile Include="Request\GetMethodDurationOrCountRequest.cs" />
+    <Compile Include="Response\GetAllMethodsResponse.cs" />
     <Compile Include="Response\GetMethodDurationorCountResponse.cs" />
     <Compile Include="Request\GetMethodsOfServiceRequest.cs" />
     <Compile Include="Request\GetServicesRequest.cs" />

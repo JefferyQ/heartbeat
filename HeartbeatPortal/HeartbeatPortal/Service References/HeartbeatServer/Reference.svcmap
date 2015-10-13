@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="e5c6e837-0ffc-4243-84c6-9d895294b8a0" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="bd1da4a2-438d-4dae-9fab-8115cac24551" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,14 +22,15 @@
     <MetadataSource Address="http://localhost:9122/HeartbeatServer" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="HeartbeatServer.xsd" MetadataType="Schema" ID="224839db-a3ab-4c06-89bf-78cb502c79b2" SourceId="1" SourceUrl="http://localhost:9122/HeartbeatServer?xsd=xsd3" />
-    <MetadataFile FileName="HeartbeatServer.disco" MetadataType="Disco" ID="dacdddd6-d9a3-4878-a13f-d521a6279a14" SourceId="1" SourceUrl="http://localhost:9122/HeartbeatServer?disco" />
-    <MetadataFile FileName="HeartbeatServer1.xsd" MetadataType="Schema" ID="92d86cb7-a350-4ba6-a633-c808b8d3c9ca" SourceId="1" SourceUrl="http://localhost:9122/HeartbeatServer?xsd=xsd5" />
-    <MetadataFile FileName="HeartbeatServer2.xsd" MetadataType="Schema" ID="d1b65e3e-e615-4769-822c-8ed6e7dbb0bf" SourceId="1" SourceUrl="http://localhost:9122/HeartbeatServer?xsd=xsd4" />
-    <MetadataFile FileName="HeartbeatServer.wsdl" MetadataType="Wsdl" ID="63d8fc3d-5059-49e9-977a-11c0bc4d1996" SourceId="1" SourceUrl="http://localhost:9122/HeartbeatServer?wsdl" />
-    <MetadataFile FileName="HeartbeatServer3.xsd" MetadataType="Schema" ID="87ce503e-af40-4093-bac1-1d04b0293a08" SourceId="1" SourceUrl="http://localhost:9122/HeartbeatServer?xsd=xsd0" />
-    <MetadataFile FileName="HeartbeatServer4.xsd" MetadataType="Schema" ID="b8aadc9b-a851-42cc-b741-56f02cd7440d" SourceId="1" SourceUrl="http://localhost:9122/HeartbeatServer?xsd=xsd1" />
-    <MetadataFile FileName="HeartbeatServer5.xsd" MetadataType="Schema" ID="3913e998-bde5-4c46-900e-ec956a14acd4" SourceId="1" SourceUrl="http://localhost:9122/HeartbeatServer?xsd=xsd2" />
+    <MetadataFile FileName="HeartbeatServer.xsd" MetadataType="Schema" ID="919b151f-18a0-43d2-bcd4-1cc6c3d6ec37" SourceId="1" SourceUrl="http://localhost:9122/HeartbeatServer?xsd=xsd3" />
+    <MetadataFile FileName="HeartbeatServer1.xsd" MetadataType="Schema" ID="90c5978d-274c-41dd-b8dc-e0325f19e20a" SourceId="1" SourceUrl="http://localhost:9122/HeartbeatServer?xsd=xsd4" />
+    <MetadataFile FileName="HeartbeatServer2.xsd" MetadataType="Schema" ID="40bb4bd7-c2b0-48cb-9e6c-002087415f36" SourceId="1" SourceUrl="http://localhost:9122/HeartbeatServer?xsd=xsd5" />
+    <MetadataFile FileName="HeartbeatServer3.xsd" MetadataType="Schema" ID="696543ec-bf51-4cc6-9975-f3dae92ac29f" SourceId="1" SourceUrl="http://localhost:9122/HeartbeatServer?xsd=xsd6" />
+    <MetadataFile FileName="HeartbeatServer.disco" MetadataType="Disco" ID="f7513fd2-ecbf-44ed-b5f7-09a43e237a3c" SourceId="1" SourceUrl="http://localhost:9122/HeartbeatServer?disco" />
+    <MetadataFile FileName="HeartbeatServer.wsdl" MetadataType="Wsdl" ID="f9fcf20a-88c9-477e-8cc3-911d232830ec" SourceId="1" SourceUrl="http://localhost:9122/HeartbeatServer?wsdl" />
+    <MetadataFile FileName="HeartbeatServer4.xsd" MetadataType="Schema" ID="fe9b96c8-f1a7-40f4-a51e-478217005ab4" SourceId="1" SourceUrl="http://localhost:9122/HeartbeatServer?xsd=xsd0" />
+    <MetadataFile FileName="HeartbeatServer5.xsd" MetadataType="Schema" ID="0f22cba7-9a60-4a02-ac9d-87af09971069" SourceId="1" SourceUrl="http://localhost:9122/HeartbeatServer?xsd=xsd1" />
+    <MetadataFile FileName="HeartbeatServer6.xsd" MetadataType="Schema" ID="3b671b57-2e58-4f28-8499-f309def5714c" SourceId="1" SourceUrl="http://localhost:9122/HeartbeatServer?xsd=xsd2" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
