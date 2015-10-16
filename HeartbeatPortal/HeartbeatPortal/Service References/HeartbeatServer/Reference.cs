@@ -129,6 +129,9 @@ namespace HeartBeatPortal.HeartbeatServer {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime LastHbField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ServerNameField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
@@ -138,6 +141,19 @@ namespace HeartBeatPortal.HeartbeatServer {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime LastHb {
+            get {
+                return this.LastHbField;
+            }
+            set {
+                if ((this.LastHbField.Equals(value) != true)) {
+                    this.LastHbField = value;
+                    this.RaisePropertyChanged("LastHb");
+                }
             }
         }
         
@@ -281,7 +297,11 @@ namespace HeartBeatPortal.HeartbeatServer {
         
         private string ApplicationNamek__BackingFieldField;
         
+        private System.DateTime FirstHeartBeatDatek__BackingFieldField;
+        
         private System.DateTime LastHeartBeatDatek__BackingFieldField;
+        
+        private string MethodNamek__BackingFieldField;
         
         private string ServerNamek__BackingFieldField;
         
@@ -308,6 +328,19 @@ namespace HeartBeatPortal.HeartbeatServer {
             }
         }
         
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<FirstHeartBeatDate>k__BackingField", IsRequired=true)]
+        public System.DateTime FirstHeartBeatDatek__BackingField {
+            get {
+                return this.FirstHeartBeatDatek__BackingFieldField;
+            }
+            set {
+                if ((this.FirstHeartBeatDatek__BackingFieldField.Equals(value) != true)) {
+                    this.FirstHeartBeatDatek__BackingFieldField = value;
+                    this.RaisePropertyChanged("FirstHeartBeatDatek__BackingField");
+                }
+            }
+        }
+        
         [System.Runtime.Serialization.DataMemberAttribute(Name="<LastHeartBeatDate>k__BackingField", IsRequired=true)]
         public System.DateTime LastHeartBeatDatek__BackingField {
             get {
@@ -317,6 +350,19 @@ namespace HeartBeatPortal.HeartbeatServer {
                 if ((this.LastHeartBeatDatek__BackingFieldField.Equals(value) != true)) {
                     this.LastHeartBeatDatek__BackingFieldField = value;
                     this.RaisePropertyChanged("LastHeartBeatDatek__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<MethodName>k__BackingField", IsRequired=true)]
+        public string MethodNamek__BackingField {
+            get {
+                return this.MethodNamek__BackingFieldField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MethodNamek__BackingFieldField, value) != true)) {
+                    this.MethodNamek__BackingFieldField = value;
+                    this.RaisePropertyChanged("MethodNamek__BackingField");
                 }
             }
         }
@@ -359,9 +405,6 @@ namespace HeartBeatPortal.HeartbeatServer {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ServerNameField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ServiceNameField;
-        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -394,19 +437,6 @@ namespace HeartBeatPortal.HeartbeatServer {
                 if ((object.ReferenceEquals(this.ServerNameField, value) != true)) {
                     this.ServerNameField = value;
                     this.RaisePropertyChanged("ServerName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ServiceName {
-            get {
-                return this.ServiceNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ServiceNameField, value) != true)) {
-                    this.ServiceNameField = value;
-                    this.RaisePropertyChanged("ServiceName");
                 }
             }
         }
@@ -748,7 +778,13 @@ namespace HeartBeatPortal.HeartbeatServer {
         private System.DateTime LastExecutionField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long MaxDurationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string MethodNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long MinDurationField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private long OverallAverageDurationField;
@@ -812,6 +848,19 @@ namespace HeartBeatPortal.HeartbeatServer {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public long MaxDuration {
+            get {
+                return this.MaxDurationField;
+            }
+            set {
+                if ((this.MaxDurationField.Equals(value) != true)) {
+                    this.MaxDurationField = value;
+                    this.RaisePropertyChanged("MaxDuration");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string MethodName {
             get {
                 return this.MethodNameField;
@@ -820,6 +869,19 @@ namespace HeartBeatPortal.HeartbeatServer {
                 if ((object.ReferenceEquals(this.MethodNameField, value) != true)) {
                     this.MethodNameField = value;
                     this.RaisePropertyChanged("MethodName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long MinDuration {
+            get {
+                return this.MinDurationField;
+            }
+            set {
+                if ((this.MinDurationField.Equals(value) != true)) {
+                    this.MinDurationField = value;
+                    this.RaisePropertyChanged("MinDuration");
                 }
             }
         }
@@ -1243,6 +1305,12 @@ namespace HeartBeatPortal.HeartbeatServer {
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ServerNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ServiceNameField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -1250,6 +1318,32 @@ namespace HeartBeatPortal.HeartbeatServer {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ServerName {
+            get {
+                return this.ServerNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ServerNameField, value) != true)) {
+                    this.ServerNameField = value;
+                    this.RaisePropertyChanged("ServerName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ServiceName {
+            get {
+                return this.ServiceNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ServiceNameField, value) != true)) {
+                    this.ServiceNameField = value;
+                    this.RaisePropertyChanged("ServiceName");
+                }
             }
         }
         
@@ -1294,6 +1388,266 @@ namespace HeartBeatPortal.HeartbeatServer {
                 if ((object.ReferenceEquals(this.MethodNameListField, value) != true)) {
                     this.MethodNameListField = value;
                     this.RaisePropertyChanged("MethodNameList");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetOneServerRequest", Namespace="http://schemas.datacontract.org/2004/07/HeartbeatServer.Request")]
+    [System.SerializableAttribute()]
+    public partial class GetOneServerRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetOneServerResponse", Namespace="http://schemas.datacontract.org/2004/07/HeartbeatServer.Response")]
+    [System.SerializableAttribute()]
+    public partial class GetOneServerResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime FirstHbField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime LastHbField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ServerNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime FirstHb {
+            get {
+                return this.FirstHbField;
+            }
+            set {
+                if ((this.FirstHbField.Equals(value) != true)) {
+                    this.FirstHbField = value;
+                    this.RaisePropertyChanged("FirstHb");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime LastHb {
+            get {
+                return this.LastHbField;
+            }
+            set {
+                if ((this.LastHbField.Equals(value) != true)) {
+                    this.LastHbField = value;
+                    this.RaisePropertyChanged("LastHb");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ServerName {
+            get {
+                return this.ServerNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ServerNameField, value) != true)) {
+                    this.ServerNameField = value;
+                    this.RaisePropertyChanged("ServerName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetOneServiceRequest", Namespace="http://schemas.datacontract.org/2004/07/HeartbeatServer.Request")]
+    [System.SerializableAttribute()]
+    public partial class GetOneServiceRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ServerNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ServiceNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ServerName {
+            get {
+                return this.ServerNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ServerNameField, value) != true)) {
+                    this.ServerNameField = value;
+                    this.RaisePropertyChanged("ServerName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ServiceName {
+            get {
+                return this.ServiceNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ServiceNameField, value) != true)) {
+                    this.ServiceNameField = value;
+                    this.RaisePropertyChanged("ServiceName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GetOneServiceResponse", Namespace="http://schemas.datacontract.org/2004/07/HeartbeatServer.Response")]
+    [System.SerializableAttribute()]
+    public partial class GetOneServiceResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime FirstHbField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime LastHbField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ServiceNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime FirstHb {
+            get {
+                return this.FirstHbField;
+            }
+            set {
+                if ((this.FirstHbField.Equals(value) != true)) {
+                    this.FirstHbField = value;
+                    this.RaisePropertyChanged("FirstHb");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime LastHb {
+            get {
+                return this.LastHbField;
+            }
+            set {
+                if ((this.LastHbField.Equals(value) != true)) {
+                    this.LastHbField = value;
+                    this.RaisePropertyChanged("LastHb");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ServiceName {
+            get {
+                return this.ServiceNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ServiceNameField, value) != true)) {
+                    this.ServiceNameField = value;
+                    this.RaisePropertyChanged("ServiceName");
                 }
             }
         }
@@ -1353,6 +1707,18 @@ namespace HeartBeatPortal.HeartbeatServer {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IHeartbeatServer/GetAllMethods", ReplyAction="http://tempuri.org/IHeartbeatServer/GetAllMethodsResponse")]
         System.Threading.Tasks.Task<HeartBeatPortal.HeartbeatServer.GetAllMethodsResponse> GetAllMethodsAsync(HeartBeatPortal.HeartbeatServer.GetAllMethodsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IHeartbeatServer/GetOneServer", ReplyAction="http://tempuri.org/IHeartbeatServer/GetOneServerResponse")]
+        HeartBeatPortal.HeartbeatServer.GetOneServerResponse GetOneServer(HeartBeatPortal.HeartbeatServer.GetOneServerRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IHeartbeatServer/GetOneServer", ReplyAction="http://tempuri.org/IHeartbeatServer/GetOneServerResponse")]
+        System.Threading.Tasks.Task<HeartBeatPortal.HeartbeatServer.GetOneServerResponse> GetOneServerAsync(HeartBeatPortal.HeartbeatServer.GetOneServerRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IHeartbeatServer/GetOneService", ReplyAction="http://tempuri.org/IHeartbeatServer/GetOneServiceResponse")]
+        HeartBeatPortal.HeartbeatServer.GetOneServiceResponse GetOneService(HeartBeatPortal.HeartbeatServer.GetOneServiceRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IHeartbeatServer/GetOneService", ReplyAction="http://tempuri.org/IHeartbeatServer/GetOneServiceResponse")]
+        System.Threading.Tasks.Task<HeartBeatPortal.HeartbeatServer.GetOneServiceResponse> GetOneServiceAsync(HeartBeatPortal.HeartbeatServer.GetOneServiceRequest request);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1436,6 +1802,22 @@ namespace HeartBeatPortal.HeartbeatServer {
         
         public System.Threading.Tasks.Task<HeartBeatPortal.HeartbeatServer.GetAllMethodsResponse> GetAllMethodsAsync(HeartBeatPortal.HeartbeatServer.GetAllMethodsRequest request) {
             return base.Channel.GetAllMethodsAsync(request);
+        }
+        
+        public HeartBeatPortal.HeartbeatServer.GetOneServerResponse GetOneServer(HeartBeatPortal.HeartbeatServer.GetOneServerRequest request) {
+            return base.Channel.GetOneServer(request);
+        }
+        
+        public System.Threading.Tasks.Task<HeartBeatPortal.HeartbeatServer.GetOneServerResponse> GetOneServerAsync(HeartBeatPortal.HeartbeatServer.GetOneServerRequest request) {
+            return base.Channel.GetOneServerAsync(request);
+        }
+        
+        public HeartBeatPortal.HeartbeatServer.GetOneServiceResponse GetOneService(HeartBeatPortal.HeartbeatServer.GetOneServiceRequest request) {
+            return base.Channel.GetOneService(request);
+        }
+        
+        public System.Threading.Tasks.Task<HeartBeatPortal.HeartbeatServer.GetOneServiceResponse> GetOneServiceAsync(HeartBeatPortal.HeartbeatServer.GetOneServiceRequest request) {
+            return base.Channel.GetOneServiceAsync(request);
         }
     }
 }

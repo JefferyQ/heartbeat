@@ -97,12 +97,16 @@
     <Compile Include="repo\HbTempArchiveItem.cs" />
     <Compile Include="Request\GetAllMethodsRequest.cs" />
     <Compile Include="Request\GetMethodDurationOrCountRequest.cs" />
+    <Compile Include="Request\GetOneServerRequest.cs" />
+    <Compile Include="Request\GetOneServiceRequest.cs" />
     <Compile Include="Response\GetAllMethodsResponse.cs" />
     <Compile Include="Response\GetMethodDurationorCountResponse.cs" />
     <Compile Include="Request\GetMethodsOfServiceRequest.cs" />
     <Compile Include="Request\GetServicesRequest.cs" />
     <Compile Include="Request\GetServersRequest.cs" />
     <Compile Include="Response\GetMethodsOfServiceResponse.cs" />
+    <Compile Include="Response\GetOneServerResponse.cs" />
+    <Compile Include="Response\GetOneServiceResponse.cs" />
     <Compile Include="Response\GetServicesResponse.cs" />
     <Compile Include="Response\GetServersResponse.cs" />
     <Compile Include="Request\GetMethodDetailRequest.cs" />

@@ -13,6 +13,8 @@ namespace HeartbeatServer.dto
         public int TotalExceptionCount { get; set; }
         public DateTime FirstExecution { get; set; }
         public DateTime LastExecution { get; set; }
+        public long MaxDuration { get; set; }
+        public long MinDuration { get; set; }
 
     }
 }

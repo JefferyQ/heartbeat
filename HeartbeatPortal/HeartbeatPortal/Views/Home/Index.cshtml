@@ -2,7 +2,88 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="dropdown-section">
+@model HeartBeatPortal.Models.ServerServiceMethodInfoModel
+
+<style>
+
+    .selection {
+        display: inline-block;
+        vertical-align: top;
+        }
+
+        .selection h2 {
+            text-transform: uppercase;
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+
+        .selection label {
+            display: inline-block;
+            width: 120px;
+            padding-right: 5px;
+            text-align: left;
+            font-size: 1.3em;
+        }
+
+        .selection .k-button {
+            margin-top: 10px;
+            width: 80px;
+            height: 35px;
+            margin-left: 343px;
+        }
+
+
+
+        .k-readonly {
+            color: gray;
+        }
+
+</style>
+
+<div id="content" style="padding-top: 1em">
+
+<div id="left" class="selection" style="margin-top: 16px; margin-left: 10px">
+    @(Html.Kendo().TreeView()
+          .Name("treeview")
+          .Items(treeview =>
+          {
+              treeview.Add().Text("All Servers")
+                  .Expanded(false)
+                  .HtmlAttributes(new { style = "font-size:25px" })
+                      .Items(root =>
+                      {
+                          foreach (var server in Model.ServerName)
+                          {
+                              root.Add().Text(server).HtmlAttributes(new { style = "font-size:20px" });
+                          }
+                      });
+
+              treeview.Add().Text("All Services")
+                  .Expanded(false)
+                  .HtmlAttributes(new { style = "font-size:25px" })
+                  .Items(root =>
+                  {
+                      foreach (var service in Model.ServiceName)
+                      {
+                          root.Add().Text(service).HtmlAttributes(new { style = "font-size:20px" });
+                      }
+                  });
+              treeview.Add().Text("All Methods")
+                  .Expanded(false)
+                  .HtmlAttributes(new { style = "font-size:25px" })
+                  .Items(root =>
+                  {
+                      foreach (var method in Model.MethodName)
+                      {
+                          root.Add().Text(method).HtmlAttributes(new { style = "font-size:20px" });
+                      }
+                  });
+
+          })
+          )
+</div>
+
+<div id="right" class="selection" style="margin-left:150px">
     <h2>View Details</h2>
     <p>
         <label for="servers">Servers:</label>
@@ -95,72 +176,39 @@
 
                 if ($("#servers").val() == "") {
                     alert("Please select a server");
-                }
-
-                else if ($("#services").val() == "" && $("#methods").val() == "") {
+                } else if ($("#services").val() == "" && $("#methods").val() == "") {
 
                     var url = '@Html.Raw(Url.Action("Servers", "GetDetails"))';
                     window.location.href = url + '?server=' + serverName;
-                }
-
-                else if ($("#methods").val() == "") {
+                } else if ($("#methods").val() == "") {
 
                     var url = '@Html.Raw(Url.Action("Services", "GetDetails"))';
                     window.location.href = url + '?server=' + serverName + '&service=' + serviceName;
-                }
-
-                else {
+                } else {
                     var url = '@Html.Raw(Url.Action("Methods", "GetDetails"))';
-                    window.location.href = url + '?server=' + serverName + '&service=' + serviceName +  '&method=' + methodName;
+                    window.location.href = url + '?server=' + serverName + '&service=' + serviceName + '&method=' + methodName;
                 }
 
             }
 
         </script>
-    </p>
+        </p>
+    </div>
+    <script>
+        $(document).ready(function() {
+            var categories = $("#servers").data("kendoDropDownList"),
+                products = $("#services").data("kendoDropDownList"),
+                orders = $("#methods").data("kendoDropDownList");
+
+            //$("#get").click(function () {
+            //    var categoryInfo = "\nCategory: { id: " + categories.value() + ", name: " + categories.text() + " }",
+            //        productInfo = "\nProduct: { id: " + products.value() + ", name: " + products.text() + " }",
+            //        orderInfo = "\nOrder: { id: " + orders.value() + ", name: " + orders.text() + " }";
+
+            //    alert("Order details:\n" + categoryInfo + productInfo + orderInfo);
+            //});
+        });
+
+    </script>
+
 </div>
-<script>
-    $(document).ready(function() {
-        var categories = $("#servers").data("kendoDropDownList"),
-            products = $("#services").data("kendoDropDownList"),
-            orders = $("#methods").data("kendoDropDownList");
-
-        //$("#get").click(function () {
-        //    var categoryInfo = "\nCategory: { id: " + categories.value() + ", name: " + categories.text() + " }",
-        //        productInfo = "\nProduct: { id: " + products.value() + ", name: " + products.text() + " }",
-        //        orderInfo = "\nOrder: { id: " + orders.value() + ", name: " + orders.text() + " }";
-
-        //    alert("Order details:\n" + categoryInfo + productInfo + orderInfo);
-        //});
-    });
-</script>
-<style>
-    .dropdown-section {
-        width: 460px;
-        padding: 30px;
-    }
-
-    .dropdown-section h2 {
-        text-transform: uppercase;
-        font-size: 1.5em;
-        margin-bottom: 30px;
-    }
-
-    .dropdown-section label {
-        display: inline-block;
-        width: 120px;
-        padding-right: 5px;
-        text-align: left;
-    }
-
-    .dropdown-section .k-button {
-        margin-top: 10px;
-        width: 80px;
-        height: 35px;
-        margin-left: 220px;
-    }
-
-    .k-readonly {
-        color: gray;
-    }
-</style>

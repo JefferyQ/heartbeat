@@ -1,3 +1,141 @@
-﻿@{
+﻿@model HeartBeatPortal.Models.MethodDiag
+@using HeartBeatPortal.MultiResources
+
+@{
     ViewBag.Title = "Method Information";
 }
+
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <style>
+        table, th, td {
+            border: none;
+        }
+
+        .child {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .child2 {
+            display: inline-block;
+            vertical-align: top;
+        }
+    </style>
+
+    <script>
+
+        function durationparams() {
+            var params = { ServiceName: "@Model.ServiceName", ServerName: "@Model.ServerName", MethodName: "@Model.MethodName" };
+            return params;
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+<div id="content" style="padding-top: 2em">
+    <div id="left" class="child" style="margin: 0px; width: 400px">
+        <h3 style="background-color: darkgray; width: 100%; margin: 0px">@Multi.MethodInfo</h3>
+        <table style="width: 100%; margin-top: 10px">
+            <tr>
+                <th style="text-align: left">@Multi.MethodName</th>
+                <td>@Model.MethodName</td>
+            </tr>
+
+            <tr>
+                <th style="text-align: left">@Multi.ServerName</th>
+                <td>@Html.ActionLink(Model.ServerName, "Servers", "GetDetails", new {server = Model.ServerName}, null)</td>
+            </tr>
+
+            <tr>
+                <th style="text-align: left">@Multi.ServiceName</th>
+                <td>@Html.ActionLink(Model.ServiceName, "Services", "GetDetails", new {server = Model.ServerName, service = Model.ServiceName}, null)</td>
+            </tr>
+
+            <tr>
+                <th style="text-align: left">@Multi.FirstExe</th>
+                <td>@Model.FirstExecution</td>
+            </tr>
+
+            <tr>
+                <th style="text-align: left">@Multi.LastExe</th>
+                <td>@Model.LastExecution</td>
+
+            </tr>
+
+            <tr>
+                <th style="text-align: left">@Multi.OverallAverage</th>
+                <td>@Model.AverageDuration</td>
+            </tr>
+
+            <tr>
+                <th style="text-align: left">@Multi.TotalExe</th>
+                <td>@Model.ExecutionCount</td>
+            </tr>
+
+            <tr>
+                <th style="text-align: left">@Multi.ExpCount</th>
+                <td>@Model.ExceptionCount</td>
+            </tr>
+
+            <tr>
+                <th style="text-align: left">@Multi.Max</th>
+                <td>@Model.MaxDuration</td>
+            </tr>
+
+            <tr>
+                <th style="text-align: left">@Multi.Min</th>
+                <td>@Model.MinDuration</td>
+            </tr>
+
+        </table>
+    </div>
+
+    <div id="middle" class="child" style="margin-left: 100px">
+        <h3 style="background-color: darkgray; width: 100%; margin: 0px">@Multi.Top10Duration</h3>
+        @(Html.Kendo().Grid<HeartBeatPortal.Models.Top10DurationOrCount>()
+              .Name("TopDurations")
+              .Columns(columns =>
+              {
+                  columns.Bound(m => m.Duration).Title(Multi.Duration);
+                  columns.Bound(m => m.ExecutionTime).Title(Multi.Date).Format("{0:dd/MM/yyyy HH:mm}");
+              })
+              .Pageable()
+              .HtmlAttributes(new {style = "width:100%"})
+              .DataSource(dataSource => dataSource
+                  .Ajax()
+                  .PageSize(3)
+                  .Read(read => read.Action("TopDurationBinding", "GridReading").Data("durationparams"))
+              )
+              )
+    </div>
+
+    <div id="right" class="child" style="margin-left:100px">
+        <h3 style="background-color:darkgray; width:100%; margin:0px">@Multi.Top10Exe</h3>
+        @(Html.Kendo().Grid<HeartBeatPortal.Models.Top10DurationOrCount>()
+                    .Name("TopExecutions")
+                    .Columns(columns =>
+                    {
+                        columns.Bound(m => m.ExeCount).Title(Multi.Count);
+                        columns.Bound(m => m.ExecutionTime).Title(Multi.Date).Format("{0:dd/MM/yyyy HH:mm}");
+                    })
+                    .Pageable()
+                    .HtmlAttributes(new { style = "width:100%" })
+                    .DataSource(dataSource => dataSource
+                    .Ajax()
+                    .PageSize(3)
+                    .Read(read => read.Action("TopExecutionBinding", "GridReading").Data("durationparams"))
+                    )
+        )
+    </div>
+
+</div>
+
+</body>
+</html>

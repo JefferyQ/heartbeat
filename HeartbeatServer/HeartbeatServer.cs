@@ -47,5 +47,16 @@ namespace HeartbeatServer
         {
             return _hbArchiveProcessor.GetMethods(request);
         }
+
+        public GetOneServerResponse GetOneServer(GetOneServerRequest request)
+        {
+            return _hbArchiveProcessor.GetOneServerAndHb(request);
+        }
+
+        public GetOneServiceResponse GetOneService(GetOneServiceRequest request)
+        {
+            return _hbArchiveProcessor.GetOneServiceAndHb(request);
+        }
+
     }
 }

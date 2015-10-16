@@ -40,22 +40,22 @@
     width: 100%;
 }
 
-#menu-1 {
+/*#menu-1 {
     width: 15%;
     height: auto;
     float: left;
-}
+}*/
 
 #screen-1 {
-    width: 85%;
+    width: 100%;
     height: auto;
-    float: right;
+    /*float: right;*/
 }
 
 .k-header h1 {
     margin: 0;
     padding: 20px 10px;
-    font-size: 24px;
+    font-size: 40px;
     font-weight: bolder;
 }
 

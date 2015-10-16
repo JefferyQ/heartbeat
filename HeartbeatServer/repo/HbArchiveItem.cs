@@ -21,6 +21,11 @@ namespace HeartbeatServer
         public DateTime ArchieveDate { get; set; }
 
         /// <summary>
+        /// Last Heartbeat Date
+        /// </summary>
+        public DateTime LastHb { get; set; }
+
+        /// <summary>
         /// yyyyMMdd format int
         /// </summary>
         //public int Minute { get; set; } test için

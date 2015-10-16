@@ -1,3 +1,113 @@
-﻿@{
+﻿@model HeartBeatPortal.Models.ServiceDiag
+@using HeartBeatPortal.MultiResources
+
+@{
     ViewBag.Title = "Service Information";
 }
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <style>
+        table, th, td {
+            border: none;
+        }
+
+        .child {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .child2 {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+
+        .noheader .k-grid-header {
+            display: none;
+        }
+    </style>
+
+    <script>
+        function serviceparams() {
+            var service = {Name: "@Model.ServiceName"};
+            return service;
+        }
+
+        function methodparams() {
+            var service = { Name: "@Model.ServiceName", ServerName: "@Model.ServerName" };
+            return service;
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+    <div id="content" style="padding-top: 2em; margin-left: 10px">
+        <div id="left" class="child" style="margin: 0px; width: 300px">
+            <h3 style="background-color: darkgray; width: 100%; margin: 0px">@Multi.ServiceInfo</h3>
+            <table style="width: 100%; margin-top: 10px">
+                <tr>
+                    <th style="text-align: left">@Multi.ServiceName</th>
+                    <td>@Model.ServiceName</td>
+                </tr>
+
+                <tr>
+                    <th style="text-align: left">@Multi.FirstHeart</th>
+                    <td>@Model.FirstHeartbeat</td>
+                </tr>
+
+                <tr>
+                    <th style="text-align: left">@Multi.LastHeart</th>
+                    <td>@Model.LastHeartbeat</td>
+
+                </tr>
+            </table>
+        </div>
+
+        <div id="middle" class="child" style="margin-left: 100px">
+            <h3 style="background-color: darkgray; width: 100%; margin: 0px">@Multi.Deployed</h3>
+            @(Html.Kendo().Grid<HeartBeatPortal.Models.ServerName>()
+                  .Name("ServerNames")
+                  .Columns(columns =>
+                  {
+                      columns.Bound(m => m.Name).Title(Multi.ServerName).ClientTemplate(@Html.ActionLink("#=Name#", "Servers", "GetDetails", new {server = "#=Name#"}, null).ToHtmlString());
+                      columns.Bound(m => m.LastHb).Title(Multi.LastHeart).Format("{0:dd/MM/yyyy HH:mm:ss}");
+                  })
+                  .Pageable()
+                  .HtmlAttributes(new {style = "width:300px"})
+                  .DataSource(dataSource => dataSource
+                      .Ajax()
+                      .PageSize(2)
+                      .Read(read => read.Action("ServerNameBinding", "GridReading").Data("serviceparams"))
+                  )
+                  )
+        </div>
+
+        <div id="right" class="child" style="margin-left:100px">
+            <h3 style="background-color:darkgray; width:100%; margin:0px">@Multi.MethodList</h3>
+            <div class="noheader">
+                @(Html.Kendo().Grid<HeartBeatPortal.Models.MethodName>()
+                    .Name("MethodNames")
+                    .Columns(columns =>
+                    {
+                        columns.Bound(m => m.Name).ClientTemplate(@Html.ActionLink("#=Name#", "Methods", "GetDetails", new { server = Model.ServerName, service = Model.ServiceName,method = "#=Name#" }, null).ToHtmlString());
+                    })
+                    .Pageable()
+                    .HtmlAttributes(new { style = "width:230px" })
+                    .DataSource(dataSource => dataSource
+                    .Ajax()
+                    .PageSize(5)
+                    .Read(read => read.Action("MethodNameBinding", "GridReading").Data("methodparams"))
+                    )
+                )
+            </div>
+
+        </div>
+
+</body>
+</html>

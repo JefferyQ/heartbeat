@@ -1,3 +1,181 @@
-﻿@{
+﻿@model HeartBeatPortal.Models.ServerDiag
+@using HeartBeatPortal.MultiResources
+
+
+@{
     ViewBag.Title = "Server Information";
 }
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <style>
+        table, th, td {
+            border: none;
+        }
+
+        .child {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .child2 {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .child .k-grid-header {
+            display: none;
+        }
+    </style>
+
+    <script>
+
+    function serverparams() {
+    var server = { name: "@Model.ServerName" };
+    return server;
+    } 
+
+    </script>
+
+</head>
+
+<body>
+
+<div id="content" style="padding-top: 2em; margin-left: 10px">
+    <div id="left" class="child" style="margin: 0px; width: 300px">
+        <h3 style="background-color: darkgray; width: 100%; margin: 0px">@Multi.ServerInfo</h3>
+        <table style="width: 100%; margin-top: 10px">
+            <tr>
+                <th style="text-align: left">@Multi.ServerName</th>
+                <td>@Model.ServerName</td>
+            </tr>
+
+            <tr>
+                <th style="text-align: left">@Multi.FirstHeart</th>
+                <td>@Model.FirstHeartbeat</td>
+            </tr>
+
+            <tr>
+                <th style="text-align: left">@Multi.LastHeart</th>
+                <td>@Model.LastHeartbeat</td>
+
+            </tr>
+        </table>
+    </div>
+
+<div id="right" class="child" style="margin-left: 100px">
+    <h3 style="background-color: darkgray; width: 100%; margin: 0px">@Multi.ServiceList</h3>
+    @(Html.Kendo().Grid<HeartBeatPortal.Models.ServiceName>()
+          .Name("ServiceNames")
+          .Columns(columns =>
+          {
+              columns.Bound(m => m.Name).ClientTemplate(@Html.ActionLink("#=Name#", "Services", "GetDetails", new {server = Model.ServerName, service = "#=Name#" }, null).ToHtmlString());
+          })
+          .Pageable()
+          .HtmlAttributes(new {style = "width:230px"})
+          .DataSource(dataSource => dataSource
+              .Ajax()
+              .PageSize(2)
+              .Read(read => read.Action("ServiceNameBinding", "GridReading").Data("serverparams"))
+          )
+          )
+</div>
+
+</div>
+
+<div style="margin-top: 20px; margin-left: 10px">
+    @(Html.Kendo().DropDownList()
+          .Name("timeline")
+          .DataTextField("Text")
+          .OptionLabel(Multi.Timeline)
+          .DataValueField("Value")
+          .HtmlAttributes(new {style = "width:250px"})
+          //.Events(e => e.Change("onChange"))
+          .BindTo(new List<SelectListItem>()
+          {
+              new SelectListItem()
+              {
+                  Text = Multi.Last10,
+                  Value = "1"
+              },
+              new SelectListItem()
+              {
+                  Text = Multi.Last1,
+                  Value = "2"
+              },
+              new SelectListItem()
+              {
+                  Text = Multi.Last2,
+                  Value = "3"
+              },
+              new SelectListItem()
+              {
+                  Text = Multi.Last6,
+                  Value = "4"
+              },
+              new SelectListItem()
+              {
+                  Text = Multi.Last12,
+                  Value = "5"
+              },
+              new SelectListItem()
+              {
+                  Text = Multi.Last24,
+                  Value = "6"
+              },
+              new SelectListItem()
+              {
+                  Text = Multi.Last2day,
+                  Value = "7"
+              },
+              new SelectListItem()
+              {
+                  Text = Multi.Last7day,
+                  Value = "8"
+              },
+              new SelectListItem()
+              {
+                  Text = Multi.Last15day,
+                  Value = "9"
+              },
+              new SelectListItem()
+              {
+                  Text = Multi.Last30day,
+                  Value = "10"
+              }
+
+          })
+          )
+
+</div>
+
+    <div class="child2" style="width:902px; margin-top: 20px; margin-left: 10px">
+        <h3 style="background-color:darkgray; width:100%; margin:0px">@Multi.Top50</h3>
+        @(Html.Kendo().Grid<HeartBeatPortal.Models.TopMethodLoads>()
+                    .Name("TopMethodLoads")
+                    .Columns(columns =>
+                    {
+                        columns.Bound(p => p.Load).Width("150px").Title(Multi.Load);
+                        columns.Bound(p => p.AverageDuration).Width("150px").Title(Multi.AverageDuration);
+                        columns.Bound(p => p.ExecutionCount).Width("150px").Title(Multi.ExeCount);
+                        columns.Bound(p => p.ExceptionCount).Width("150px").Title(Multi.ExpCount);
+                        columns.Bound(p => p.ApplicationName).Title(Multi.ApplicationName);
+                        columns.Bound(p => p.MethodName).Title(Multi.MethodName).ClientTemplate(@Html.ActionLink("#=MethodName#", "Methods", "GetDetails", new { server = Model.ServerName, service = "#=ApplicationName#",method = "#=MethodName#" }, null).ToHtmlString());
+                    })
+                    .Pageable()
+                    .HtmlAttributes(new { style = "width:901" })
+                    .DataSource(dataSource => dataSource
+                    .Ajax()
+                    .PageSize(5)
+                    .Read(read => read.Action("TopMethodBinding", "GridReading").Data("serverparams"))
+                    )
+        )
+
+    </div>
+
+</body>
+</html>
+
+    

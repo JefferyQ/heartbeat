@@ -125,15 +125,33 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DropDownListController.cs" />
     <Compile Include="Controllers\GetDetailsController.cs" />
+    <Compile Include="Controllers\GridReadingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\MultiBase.cs" />
     <Compile Include="Models\DropDownList.cs" />
+    <Compile Include="Models\MethodDiag.cs" />
+    <Compile Include="Models\MethodName.cs" />
+    <Compile Include="Models\ServiceDiag.cs" />
+    <Compile Include="Models\Top10DurationOrCount.cs" />
+    <Compile Include="Models\TopMethodLoads.cs" />
+    <Compile Include="Models\ServerDiag.cs" />
+    <Compile Include="Models\ServerName.cs" />
     <Compile Include="Models\ServerServiceDetails.cs" />
     <Compile Include="Models\ServerServiceMethodInfoModel.cs" />
-    <Compile Include="MultiResources\Multi.Designer.cs" />
-    <Compile Include="MultiResources\Multi.tr.Designer.cs" />
+    <Compile Include="Models\ServiceName.cs" />
+    <Compile Include="MultiResources\Multi.tr1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Multi.tr.resx</DependentUpon>
+    </Compile>
+    <Compile Include="MultiResources\Multi1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Multi.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\HeartbeatServer\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -1063,6 +1081,12 @@
     <Content Include="Service References\HeartbeatServer\HeartBeatPortal.HeartbeatServer.GetTopMethodLoadResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Service References\HeartbeatServer\HeartBeatPortal.HeartbeatServer.GetOneServerResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\HeartbeatServer\HeartBeatPortal.HeartbeatServer.GetOneServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Service References\HeartbeatServer\HeartbeatServer.disco" />
     <None Include="Service References\HeartbeatServer\configuration91.svcinfo" />
     <None Include="Service References\HeartbeatServer\configuration.svcinfo" />
@@ -1211,7 +1235,6 @@
     <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Time.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Url.cshtml" />
-    <Content Include="Views\Shared\_KendoMenu.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\RedemptionStatusEditor.cshtml" />
     <None Include="Service References\HeartbeatServer\HeartbeatServer.wsdl" />
     <None Include="Service References\HeartbeatServer\HeartbeatServer.xsd">
@@ -1248,13 +1271,20 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\GridReading\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="MultiResources\Multi.resx" />
-    <EmbeddedResource Include="MultiResources\Multi.tr.resx" />
+    <EmbeddedResource Include="MultiResources\Multi.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Multi1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MultiResources\Multi.tr.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Multi.tr1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

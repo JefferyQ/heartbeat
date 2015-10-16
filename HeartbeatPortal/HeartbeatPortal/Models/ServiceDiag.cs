@@ -5,10 +5,11 @@ using System.Web;
 
 namespace HeartBeatPortal.Models
 {
-    public class ServerServiceDetails
+    public class ServiceDiag
     {
-        public string ServerName { get; set; }
         public string ServiceName { get; set; }
-        public string MethodName { get; set; }
+        public string ServerName { get; set; }
+        public DateTime FirstHeartbeat { get; set; }
+        public DateTime LastHeartbeat { get; set; }
     }
 }

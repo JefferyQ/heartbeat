@@ -79,7 +79,7 @@ namespace HeartBeatPortal.MultiResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Application Name.
+        ///   Looks up a localized string similar to Service Name.
         /// </summary>
         public static string ApplicationName {
             get {
@@ -637,6 +637,15 @@ namespace HeartBeatPortal.MultiResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exception Count.
+        /// </summary>
+        public static string ExpCount {
+            get {
+                return ResourceManager.GetString("ExpCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to First Execution.
         /// </summary>
         public static string FirstExe {
@@ -880,6 +889,15 @@ namespace HeartBeatPortal.MultiResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Maximum Duration (ms).
+        /// </summary>
+        public static string Max {
+            get {
+                return ResourceManager.GetString("Max", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Method Info.
         /// </summary>
         public static string MethodInfo {
@@ -912,6 +930,15 @@ namespace HeartBeatPortal.MultiResources {
         public static string MethodName {
             get {
                 return ResourceManager.GetString("MethodName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimum Duration (ms).
+        /// </summary>
+        public static string Min {
+            get {
+                return ResourceManager.GetString("Min", resourceCulture);
             }
         }
         
@@ -997,7 +1024,7 @@ namespace HeartBeatPortal.MultiResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Top 10 Average Durations.
+        ///   Looks up a localized string similar to Top 10 Hourly Average Durations For Today.
         /// </summary>
         public static string Top10Duration {
             get {
@@ -1006,7 +1033,7 @@ namespace HeartBeatPortal.MultiResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Top 10 Execution Counts.
+        ///   Looks up a localized string similar to Top 10 Hourly Execution Counts For Today.
         /// </summary>
         public static string Top10Exe {
             get {

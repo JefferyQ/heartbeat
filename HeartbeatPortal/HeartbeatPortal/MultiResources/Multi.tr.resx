@@ -121,7 +121,7 @@
     <value>Bütün Sunucular</value>
   </data>
   <data name="ApplicationName" xml:space="preserve">
-    <value>Uygulama Adı</value>
+    <value>Servis Adı</value>
   </data>
   <data name="AverageCount" xml:space="preserve">
     <value>Ortalama Çalışma Sayısı</value>
@@ -427,10 +427,10 @@
     <value>Zaman Çizelgesi</value>
   </data>
   <data name="Top10Duration" xml:space="preserve">
-    <value>İlk 10 Ortalama Çalışma Süresi</value>
+    <value>Bugün İçin Saatlik En Yüksek 10 Ortalama Çalışma Süresi</value>
   </data>
   <data name="Top10Exe" xml:space="preserve">
-    <value>İlk 10 Çalışma Sayısı</value>
+    <value>Bugün İçin Saatlik En Yülksek 10 Çalışma Sayısı</value>
   </data>
   <data name="Top50" xml:space="preserve">
     <value>İlk 50 Metod Yükü</value>
@@ -443,5 +443,14 @@
   </data>
   <data name="Alert" xml:space="preserve">
     <value>Lutfen zaman cizelgesi ve diyagram tipini seciniz</value>
+  </data>
+  <data name="ExpCount" xml:space="preserve">
+    <value>Hata Sayısı</value>
+  </data>
+  <data name="Max" xml:space="preserve">
+    <value>En Yüksek Çalışma Süresi (ms)</value>
+  </data>
+  <data name="Min" xml:space="preserve">
+    <value>En Düşük Çalışma Süresi (ms)</value>
   </data>
 </root>

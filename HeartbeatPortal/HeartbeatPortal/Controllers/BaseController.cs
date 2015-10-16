@@ -1,5 +1,6 @@
 ﻿using HeartBeatPortal.Clients;
 using HeartBeatPortal.HeartbeatServer;
+using HeartBeatPortal.Helpers;
 using HeartBeatPortal.MultiResources;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Web.Mvc;
 
 namespace HeartBeatPortal.Controllers
 {
-    public abstract class BaseController : Controller
+    public abstract class BaseController : MultiBase
     {
         protected BaseController()
         {

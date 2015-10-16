@@ -1,11 +1,9 @@
 ﻿
 namespace HeartbeatServer.Request
 {
-    public class GetTopMethodLoadRequest
+    public class GetOneServiceRequest
     {
-
         public string ServerName { get; set; }
-        public int MethodNumber { get; set; }
-
+        public string ServiceName { get; set; }
     }
 }

@@ -23,13 +23,13 @@ namespace HeartbeatServer
 
         private readonly List<HbTempArchiveItem> _hbTempArchiveItems;
         private readonly List<HbArchiveItem> _hbArchiveItems;
-        private readonly List<ServiceInfo> _allServicesInfo;
+        private readonly List<ServiceInfo> _allInfo;
 
         public HbArchiveProcessor()
         {
             _hbTempArchiveItems = new List<HbTempArchiveItem>();
             _hbArchiveItems = new List<HbArchiveItem>();
-            _allServicesInfo = new List<ServiceInfo>();
+            _allInfo = new List<ServiceInfo>();
 
             DoTimerStuff();
             
@@ -39,7 +39,7 @@ namespace HeartbeatServer
             if (archiveItems != null)
                 _hbArchiveItems = archiveItems;
             if (allServicesInfo != null)
-                _allServicesInfo = allServicesInfo;
+                _allInfo = allServicesInfo;
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace HeartbeatServer
             try
             {
                 Monitor.Enter(_hbTempArchiveItems, ref acquiredLock);
-                Monitor.Enter(_allServicesInfo, ref acquiredlockServices);
+                Monitor.Enter(_allInfo, ref acquiredlockServices);
 
                 foreach (MethodExecutionStats newMethodStats in newAppStats.MethodStats)
                 {
@@ -89,14 +89,16 @@ namespace HeartbeatServer
                     }
 
                     // Add or Update ServiceInfos
-                    var existingServices = _allServicesInfo.SingleOrDefault(m => m.ApplicationName == newAppStats.ApplicationName && m.ServerName == newAppStats.ClientMachine);
+                    var existingServices = _allInfo.SingleOrDefault(m => m.ApplicationName == newAppStats.ApplicationName && m.ServerName == newAppStats.ClientMachine && m.MethodName == newMethodStats.MethodName);
                     if (existingServices == null)
                     {
-                        _allServicesInfo.Add(new ServiceInfo()
+                        _allInfo.Add(new ServiceInfo()
                         {
                             ApplicationName = newAppStats.ApplicationName,
                             LastHeartBeatDate = newAppStats.EndDate,
-                            ServerName = newAppStats.ClientMachine
+                            ServerName = newAppStats.ClientMachine,
+                            MethodName = newMethodStats.MethodName,
+                            FirstHeartBeatDate = newAppStats.EndDate
                         });
                     }
                     else
@@ -116,7 +118,7 @@ namespace HeartbeatServer
                 if (acquiredLock)
                     Monitor.Exit(_hbTempArchiveItems);
                 if (acquiredlockServices)
-                    Monitor.Exit(_allServicesInfo);
+                    Monitor.Exit(_allInfo);
             }
         }
         
@@ -136,7 +138,7 @@ namespace HeartbeatServer
             {
                 Monitor.Enter(_hbTempArchiveItems, ref acquiredLockTemp);
                 Monitor.Enter(_hbArchiveItems, ref acquiredLockArchive);
-                Monitor.Enter(_allServicesInfo, ref acquiredlockServices);
+                Monitor.Enter(_allInfo, ref acquiredlockServices);
 
                 //_hbArchiveItems.RemoveAll(m => (threshold - m.ArchieveDate).TotalMinutes > 3);   for testing
                 _hbArchiveItems.RemoveAll(m => (threshold - m.ArchieveDate).TotalMinutes > 32 * 24 * 60);
@@ -164,7 +166,6 @@ namespace HeartbeatServer
                             ApplicationName = newItem.ApplicationName,
                             ExceptionCount = newItem.ExceptionCount, // exception count yoktu, eklendi
                             ArchieveDate = newItem.StatDate
-
                         });
                     }
                     else
@@ -188,7 +189,7 @@ namespace HeartbeatServer
                 _hbTempArchiveItems.RemoveAll(m => m.StatDate < threshold);
 
                 BinarySerialization.WriteToBinaryFile<List<HbArchiveItem>>("Archive.hb", _hbArchiveItems);
-                BinarySerialization.WriteToBinaryFile<List<ServiceInfo>>("ServicesInformation.hb", _allServicesInfo);
+                BinarySerialization.WriteToBinaryFile<List<ServiceInfo>>("ServicesInformation.hb", _allInfo);
             }
             catch (Exception ex)
             {
@@ -201,7 +202,7 @@ namespace HeartbeatServer
                 if (acquiredLockArchive)
                     Monitor.Exit(_hbArchiveItems);
                 if (acquiredlockServices)
-                    Monitor.Exit(_allServicesInfo);
+                    Monitor.Exit(_allInfo);
             }
         }
 
@@ -233,15 +234,37 @@ namespace HeartbeatServer
             var response = new GetServersResponse();
             response.ServerInfoList = new List<ServerInfo>();
 
-            var list = _hbArchiveItems.Where(w => w.ApplicationName == request.ServiceName || request.AllServers).GroupBy(x => x.ClientMachine).Select(grp => grp.First()).ToList();
+            //var list = _hbArchiveItems.Where(w => w.ApplicationName == request.ServiceName || request.AllServers).GroupBy(x => x.ClientMachine).Select(group => new { ServerName = group.Key, Items = group.ToList() }).ToList();
 
-            foreach (var hbArchiveItem in list)
+            var deneme =
+                _allInfo.Where(w => w.ApplicationName == request.ServiceName || request.AllServers)
+                    .GroupBy(g => g.ServerName)
+                    .Select(group => new {ServerName = group.Key, Items = group.ToList()})
+                    .ToList();
+
+            foreach (var item in deneme)
             {
-                response.ServerInfoList.Add(new ServerInfo()
-                {
-                    ServerName = hbArchiveItem.ClientMachine
-                });
-            }           
+                var serviceInfo = item.Items.OrderByDescending(x => x.LastHeartBeatDate).FirstOrDefault();
+                if (serviceInfo != null)
+                    response.ServerInfoList.Add(new ServerInfo()
+                    {
+                        ServerName = item.ServerName,
+                        LastHb = serviceInfo.LastHeartBeatDate
+                    });
+            }
+
+            //var deneme = list.Join(_allInfo, hbArchiveItem => hbArchiveItem.ServerName,
+            //    allService => allService.ServerName,
+            //    (hbArchiveItem, allService) => new { HbArchiveItem = hbArchiveItem, ServiceInfo = allService });
+
+            //foreach (var hbArchiveItem in list)
+            //{
+            //    response.ServerInfoList.Add(new ServerInfo()
+            //    {
+            //        ServerName = hbArchiveItem.ClientMachine,
+            //        LastHb = 
+            //    });
+            //}           
             return response;
         }
 
@@ -250,8 +273,28 @@ namespace HeartbeatServer
             var response = new GetServicesResponse();
             response.ServiceInfoList = new List<ServiceInfo>();
 
-            response.ServiceInfoList =
-                _allServicesInfo.Where(w => w.ServerName == request.ServerName || request.AllServices).ToList();
+            //response.ServiceInfoList =
+            //    _allInfo.Where(w => w.ServerName == request.ServerName || request.AllServices).Distinct().ToList();
+
+            var deneme =
+            _allInfo.Where(w => w.ServerName == request.ServerName || request.AllServices)
+            .GroupBy(g => g.ApplicationName)
+            .Select(group => new { ApplicationName = group.Key, Items = group.ToList() })
+            .ToList();
+
+            foreach (var item in deneme)
+            {
+                var serviceInfo = item.Items.FirstOrDefault();
+                if (serviceInfo != null)
+                    response.ServiceInfoList.Add(new ServiceInfo()
+                    {
+                        ServerName = serviceInfo.ServerName,
+                        ApplicationName = item.ApplicationName,
+                        FirstHeartBeatDate = serviceInfo.FirstHeartBeatDate,
+                        LastHeartBeatDate = serviceInfo.LastHeartBeatDate
+                    });
+            }
+
 
             return response;
         }
@@ -261,14 +304,35 @@ namespace HeartbeatServer
             var response = new GetAllMethodsResponse();
             response.MethodNameList = new List<string>();
 
-            var list = _hbArchiveItems.GroupBy(g => g.MethodName).Select(s => s.Key);
-
-            foreach (var item in list)
+            if (request.ServerName == null && request.ServiceName == null)
             {
-                response.MethodNameList.Add(item);
-            }
 
-            return response;
+                var list = _hbArchiveItems.GroupBy(g => g.MethodName).Select(s => s.Key);
+
+                foreach (var item in list)
+                {
+                    response.MethodNameList.Add(item);
+                }
+
+                return response;
+
+            }
+            else
+            {
+                var list =
+                    _hbArchiveItems.Where(
+                        x => x.ClientMachine == request.ServerName && x.ApplicationName == request.ServiceName)
+                        .GroupBy(g => g.MethodName)
+                        .Select(s => s.Key);
+
+                foreach (var item in list)
+                {
+                    response.MethodNameList.Add(item);
+                }
+
+                return response;
+
+            }
         }
 
         public GetTopMethodLoadResponse TopNMethods(GetTopMethodLoadRequest request)
@@ -277,7 +341,7 @@ namespace HeartbeatServer
             var response = new GetTopMethodLoadResponse();
             response.MethodLoadDetailList = new List<MethodLoadDetails>();
 
-            var list = _hbArchiveItems.Where(x => x.ClientMachine == request.ServerName && x.ApplicationName == request.ServiceName);
+            var list = _hbArchiveItems.Where(x => x.ClientMachine == request.ServerName);
 
             foreach (var hbArchieveItem in list)
                 {
@@ -288,6 +352,7 @@ namespace HeartbeatServer
                         ServerName = hbArchieveItem.ClientMachine,
                         Load = hbArchieveItem.AverageDuration * hbArchieveItem.ExecutionCount,
                         ExceptionCount = hbArchieveItem.ExceptionCount,
+                        AverageDuration = hbArchieveItem.AverageDuration,
                         ExecutionCount = hbArchieveItem.ExecutionCount
 
                     });
@@ -308,10 +373,13 @@ namespace HeartbeatServer
             response.Details.ApplicationName = request.ServiceName;
             response.Details.ServerName = request.ServerName;
             response.Details.TotalExceptionCount = list.Sum(s => s.ExceptionCount);
-            response.Details.OverallAverageDuration = list.Sum(s => s.AverageDuration) / list.Sum(s => s.ExecutionCount);
-            response.Details.FirstExecution = list.OrderBy(or => or.ArchieveDate).First().ArchieveDate;
-            response.Details.LastExecution = list.OrderBy(or => or.ArchieveDate).Last().ArchieveDate;
+            response.Details.OverallAverageDuration = list.Sum(s => s.AverageDuration) / list.Count();
+            var dateInfo = _allInfo.Where(x => x.MethodName == request.MethodName).FirstOrDefault();
+            response.Details.FirstExecution = dateInfo.FirstHeartBeatDate;
+            response.Details.LastExecution = dateInfo.LastHeartBeatDate;
             response.Details.TotalExecutionCount = list.Sum(s => s.ExecutionCount);
+            response.Details.MaxDuration = list.OrderByDescending(or => or.MaxDuration).First().MaxDuration;
+            response.Details.MinDuration = list.OrderBy(or => or.MinDuration).First().MinDuration;
 
             return response;
         }
@@ -371,6 +439,34 @@ namespace HeartbeatServer
                     MethodName = hbArchiveItem.MethodName
                 });
             }
+
+            return response;
+
+        }
+
+        public GetOneServerResponse GetOneServerAndHb(GetOneServerRequest request)
+        {
+            var response = new GetOneServerResponse();
+
+            response.ServerName = request.Name;
+
+            var serverInfo = _allInfo.Where(x => x.ServerName == request.Name).OrderBy(or => or.FirstHeartBeatDate).FirstOrDefault();
+            response.LastHb = serverInfo.LastHeartBeatDate;
+            response.FirstHb = serverInfo.FirstHeartBeatDate;
+
+            return response;
+
+        }
+
+        public GetOneServiceResponse GetOneServiceAndHb(GetOneServiceRequest request)
+        {
+            var response = new GetOneServiceResponse();
+
+            response.ServiceName = request.ServiceName;
+
+            var serviceInfo = _allInfo.Where(x => x.ServerName == request.ServerName && x.ApplicationName == request.ServiceName).FirstOrDefault();
+            response.FirstHb = serviceInfo.FirstHeartBeatDate;
+            response.LastHb = serviceInfo.LastHeartBeatDate;
 
             return response;
 

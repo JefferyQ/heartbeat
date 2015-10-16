@@ -121,7 +121,7 @@
     <value>All Servers</value>
   </data>
   <data name="ApplicationName" xml:space="preserve">
-    <value>Application Name</value>
+    <value>Service Name</value>
   </data>
   <data name="AverageCount" xml:space="preserve">
     <value>Average Execution Count</value>
@@ -427,10 +427,10 @@
     <value>Timeline</value>
   </data>
   <data name="Top10Duration" xml:space="preserve">
-    <value>Top 10 Average Durations</value>
+    <value>Top 10 Hourly Average Durations For Today</value>
   </data>
   <data name="Top10Exe" xml:space="preserve">
-    <value>Top 10 Execution Counts</value>
+    <value>Top 10 Hourly Execution Counts For Today</value>
   </data>
   <data name="Top50" xml:space="preserve">
     <value>Top 50 Method Loads</value>
@@ -443,5 +443,14 @@
   </data>
   <data name="Alert" xml:space="preserve">
     <value>Please select timeline and diagram type</value>
+  </data>
+  <data name="ExpCount" xml:space="preserve">
+    <value>Exception Count</value>
+  </data>
+  <data name="Max" xml:space="preserve">
+    <value>Maximum Duration (ms)</value>
+  </data>
+  <data name="Min" xml:space="preserve">
+    <value>Minimum Duration (ms)</value>
   </data>
 </root>
