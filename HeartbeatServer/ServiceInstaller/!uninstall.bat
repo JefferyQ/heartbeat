@@ -1,0 +1,3 @@
+﻿pause
+HeartbeatServer -uninstall
+pause

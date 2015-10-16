@@ -20,7 +20,8 @@ namespace HeartbeatServer
     /// </summary>
     public class HbArchiveProcessor
     {
-
+        private readonly string _archiveDataPath;
+        private readonly string _serviceDataPath;
         private readonly List<HbTempArchiveItem> _hbTempArchiveItems;
         private readonly List<HbArchiveItem> _hbArchiveItems;
         private readonly List<ServiceInfo> _allInfo;
@@ -30,11 +31,18 @@ namespace HeartbeatServer
             _hbTempArchiveItems = new List<HbTempArchiveItem>();
             _hbArchiveItems = new List<HbArchiveItem>();
             _allInfo = new List<ServiceInfo>();
+            var currentPath = System.AppDomain.CurrentDomain.BaseDirectory + "\\Data";
+            if (!Directory.Exists(currentPath))
+            {
+                Directory.CreateDirectory(currentPath);
+            }
 
+            _archiveDataPath = currentPath + "\\" + ConfigurationManager.AppSettings["ArchiveDataFileName"];
+            _serviceDataPath = currentPath + "\\" + ConfigurationManager.AppSettings["ServiceInfoDataFileName"];
             DoTimerStuff();
-            
-            List<HbArchiveItem> archiveItems = BinarySerialization.ReadFromBinaryFile<List<HbArchiveItem>>("Archive.hb");
-            List<ServiceInfo> allServicesInfo = BinarySerialization.ReadFromBinaryFile<List<ServiceInfo>>("ServicesInformation.hb");
+
+            List<HbArchiveItem> archiveItems = BinarySerialization.ReadFromBinaryFile<List<HbArchiveItem>>(_archiveDataPath);
+            List<ServiceInfo> allServicesInfo = BinarySerialization.ReadFromBinaryFile<List<ServiceInfo>>(_serviceDataPath);
             
             if (archiveItems != null)
                 _hbArchiveItems = archiveItems;
@@ -188,8 +196,8 @@ namespace HeartbeatServer
 
                 _hbTempArchiveItems.RemoveAll(m => m.StatDate < threshold);
 
-                BinarySerialization.WriteToBinaryFile<List<HbArchiveItem>>("Archive.hb", _hbArchiveItems);
-                BinarySerialization.WriteToBinaryFile<List<ServiceInfo>>("ServicesInformation.hb", _allInfo);
+                BinarySerialization.WriteToBinaryFile<List<HbArchiveItem>>(_archiveDataPath, _hbArchiveItems);
+                BinarySerialization.WriteToBinaryFile<List<ServiceInfo>>(_serviceDataPath, _allInfo);
             }
             catch (Exception ex)
             {
